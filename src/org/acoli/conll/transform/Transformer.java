@@ -160,7 +160,7 @@ public class Transformer {
 		System.out.println("./run.sh CoNLLStreamExtractor "+writeArray(me.extractorArgs(baseuri)));
 		String[] updateArgs = me.updateArgs();
 		if(updateArgs!=null)
-			System.out.println("./run.sh CoNLLRDFFormatter "+writeArray(updateArgs));
+			System.out.println("./run.sh CoNLLRDFUpdater "+writeArray(updateArgs));
 		System.out.println("./run.sh CoNLLRDFFormatter "+writeArray(me.formatterArgs()));
 	}
 
