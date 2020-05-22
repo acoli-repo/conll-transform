@@ -1,52 +1,65 @@
 #!/bin/bash
+# transform CoNLL formats, see help note below
 
+# NOTE: we expect necessary libraries to be provided by CoNLL-RDF, if that changes, this script may will break
+# NOTE: this script is slow because it checks dependencies and performs compilations, revise for real applications
+
+
+##########
+# config #
+##########
+# adjust to your system
+
+# set to your CoNLL-RDF home directory
+CONLL_RDF=conll-rdf
+
+# set to your java execs
+JAVA=java
+JAVAC=javac
+
+# system requirements:
+# git 
+# rapper (http://librdf.org/raptor/)
+# java
+
+########
+# init #
+########
+# do not touch
+
+# setup CoNLL-RDF
+RUN=$CONLL_RDF/run.sh;
+if [ ! -e $RUN ]; then
+mkdir -p $CONLL_RDF >&/dev/null;
+git clone --single-branch https://github.com/acoli-repo/conll-rdf.git $CONLL_RDF
+fi;
+EXTRACT=$RUN' CoNLLStreamExtractor'
+UPDATE=$RUN' CoNLLRDFUpdater'
+FORMAT=$RUN' CoNLLRDFFormatter'
+OWL=$CONLL_RDF/owl/conll.ttl;
+if [ $OSTYPE = "cygwin" ]; then
+	OWL=`cygpath -wa $CONLL_RDF/owl`'\conll.ttl';
+fi;
+chmod u+x $RUN
+chmod u+x $CONLL_RDF/compile.sh; 
+
+##################
+# basic help msg #
+##################
 echo 'synopsis: '$0' [-help]' 1>&2;
-echo '          '$0' SRC TGT' 1>&2;
+echo '          '$0' SRC TGT [OWL]' 1>&2;
 echo '  -help list all supported formats' 1>&2
 echo '  SRC   source format' 1>&2;
 echo '  TGT   target format' 1>&2;
+echo '  OWL   CoNLL ontology, TTL format, defaults to '$OWL 1>&2;
 echo 'read CoNLL data from stdin, write to stdout' 1>&2
-echo 'transform from SRC format to TGT format' 1>&2
-
-# NOTE: we expect necessary libraries to be provided by CoNLL-RDF, if that changes, this script may will
-# NOTE: this script is slow because it checks dependencies and performs compilations, revise for real applications
+echo 'transform from SRC format to TGT format according to OWL' 1>&2
 
 if echo $1 | egrep . >&/dev/null; then
-
-	##########
-	# config #
-	##########
-	# adjust to your system
-
-	# set to your CoNLL-RDF home directory
-	CONLL_RDF=conll-rdf
-
-	# set to your java execs
-	JAVA=java
-	JAVAC=javac
-
-	# system requirements:
-	# git 
-	# rapper (http://librdf.org/raptor/)
-	# java
-
-	########
-	# init #
-	########
+	###########
+	# preproc #
+	###########
 	# do not touch
-
-	# setup CoNLL-RDF
-	RUN=$CONLL_RDF/run.sh;
-	if [ ! -e $RUN ]; then
-		mkdir -p $CONLL_RDF >&/dev/null;
-		git clone --single-branch https://github.com/acoli-repo/conll-rdf.git $CONLL_RDF
-	fi;
-	EXTRACT=$RUN' CoNLLStreamExtractor'
-	UPDATE=$RUN' CoNLLRDFUpdater'
-	FORMAT=$RUN' CoNLLRDFFormatter'
-	OWL=$CONLL_RDF/owl/conll.ttl
-	chmod u+x $RUN
-	chmod u+x $CONLL_RDF/compile.sh; 
 	$CONLL_RDF/compile.sh;
 		
 	FORMATS=`rapper -i turtle $OWL 2>/dev/null | \
@@ -93,7 +106,7 @@ if echo $1 | egrep . >&/dev/null; then
 		fi;
 	cd - >&/dev/null
 
-	TRANSFORM=org/acoli/conll/transform/CoNLLTransform
+	TRANSFORM=org/acoli/conll/transform/Transformer
 
 	#####################
 	# extended help msg #
@@ -111,23 +124,19 @@ if echo $1 | egrep . >&/dev/null; then
 	##############
 	# processing #
 	##############
-	# cannot be combined with -help
+	# should not be combined with -help
 
 	# check args
 	if echo $2 | egrep . >& /dev/null ; then
-		if echo $FORMATS | egrep -i $1 | egrep -i $2 >& /dev/null; then
-			SRC=$1;
-			TGT=$2;
 
-	# check installation
+		# check installation
 			if [ ! -e $TGT/$TRANSFORM.class ]; then
-				echo 'error: compilation failed, did not find '$TRANSFORM' class' 1>&2;
+				echo 'error: compilation failed, did not find '$TRANSFORM' class in' $TGT 1>&2;
 			else
 
-	# transform
-				$JAVA -Dfile.encoding=UTF8 -classpath $CLASSPATH $TRANSFORM $SRC $TGT
+		# transform
+				$JAVA -Dfile.encoding=UTF8 -classpath $CLASSPATH $TRANSFORM $1 $2 $OWL
 				#could also add  -Dlog4j.configuration=file:'src/log4j.properties' for another log4j config
 			fi;
-		fi;
 	fi;	
 fi;
