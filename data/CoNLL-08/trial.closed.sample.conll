@@ -1,0 +1,42 @@
+1	The	the	DT	DT	The	the	DT	2	NMOD	_	_	_	_	_
+2	economy	economy	NN	NN	economy	economy	NN	4	NMOD	_	A1	_	_	_
+3	's	's	POS	POS	's	's	POS	2	SUFFIX	_	_	_	_	_
+4	temperature	temperature	NN	NN	temperature	temperature	NN	5	SBJ	temperature.01	A2	A1	_	_
+5	will	will	MD	MD	will	will	MD	0	ROOT	_	_	AM-MOD	_	_
+6	be	be	VB	VB	be	be	VB	5	VC	_	_	_	_	_
+7	taken	take	VBN	VBN	taken	take	VBN	6	VC	take.01	_	_	_	_
+8	from	from	IN	IN	from	from	IN	7	CLR	_	_	A2	_	_
+9	several	several	JJ	JJ	several	several	DT	11	NMOD	_	_	_	_	_
+10	vantage	vantage	NN	NN	vantage	vantage	NN	11	NMOD	_	_	_	A1	_
+11	points	point	NNS	NNS	points	point	NNS	8	PMOD	point.02	_	_	_	_
+12	this	this	DT	DT	this	this	DT	13	NMOD	_	_	_	_	_
+13	week	week	NN	NN	week	week	NN	7	TMP	_	_	AM-TMP	_	_
+14	,	,	,	,	,	,	,	7	P	_	_	_	_	_
+15	with	with	IN	IN	with	with	IN	7	ADV	_	_	AM-ADV	_	_
+16	readings	reading	NNS	NNS	readings	reading	NNS	15	PMOD	reading.01	_	_	_	_
+17	on	on	IN	IN	on	on	IN	16	NMOD	_	_	_	_	A1
+18	trade	trade	NN	NN	trade	trade	NN	17	PMOD	_	_	_	_	_
+19	,	,	,	,	,	,	,	18	P	_	_	_	_	_
+20	output	output	NN	NN	output	output	NN	18	COORD	_	_	_	_	_
+21	,	,	,	,	,	,	,	20	P	_	_	_	_	_
+22	housing	housing	NN	NN	housing	housing	NN	20	COORD	_	_	_	_	_
+23	and	and	CC	CC	and	and	CC	22	COORD	_	_	_	_	_
+24	inflation	inflation	NN	NN	inflation	inflation	NN	23	CONJ	_	_	_	_	_
+25	.	.	.	.	.	.	.	5	P	_	_	_	_	_
+
+1	The	the	DT	DT	The	the	DT	4	NMOD	_	_	_
+2	most	most	RBS	RBS	most	most	RBS	3	AMOD	_	_	_
+3	troublesome	troublesome	JJ	JJ	troublesome	troublesome	JJ	4	NMOD	_	_	_
+4	report	report	NN	NN	report	report	NN	5	SBJ	_	_	_
+5	may	may	MD	MD	may	may	MD	0	ROOT	_	_	_
+6	be	be	VB	VB	be	be	VB	5	VC	_	_	_
+7	the	the	DT	DT	the	the	DT	11	NMOD	_	_	_
+8	August	august	NNP	NNP	August	august	NNP	11	NMOD	_	_	AM-TMP
+9	merchandise	merchandise	NN	NN	merchandise	merchandise	NN	10	NMOD	_	A1	_
+10	trade	trade	NN	NN	trade	trade	NN	11	NMOD	trade.01	_	_
+11	deficit	deficit	NN	NN	deficit	deficit	NN	6	PRD	deficit.01	_	A1
+12	due	due	JJ	JJ	due	due	JJ	13	AMOD	_	_	_
+13	out	out	IN	IN	out	out	IN	11	APPO	_	_	_
+14	tomorrow	tomorrow	NN	NN	tomorrow	tomorrow	NN	13	TMP	_	_	_
+15	.	.	.	.	.	.	.	5	P	_	_	_
+

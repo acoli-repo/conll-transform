@@ -1,0 +1,266 @@
+#begin document (wb/eng/00/eng_0001); part 000
+wb/eng/00/eng_0001   0   0    [WORD]    RB   (TOP(S(NP*               -    -   -    _Jim_Bacon_  *    (ARG1*      (ARG0*        -
+wb/eng/00/eng_0001   0   1    [WORD]   PRP            *)              -    -   -    _Jim_Bacon_  *         *)          *)     (30)
+wb/eng/00/eng_0001   0   2    [WORD]   VBP         (VP*              get  03   3    _Jim_Bacon_  *       (V*)          *        -
+wb/eng/00/eng_0001   0   3    [WORD]    JJ       (ADJP*               -    -   -    _Jim_Bacon_  *    (ARG2*           *        -
+wb/eng/00/eng_0001   0   4    [WORD]    IN         (PP*               -    -   -    _Jim_Bacon_  *         *           *        -
+wb/eng/00/eng_0001   0   5    [WORD]   VBG       (S(VP*            argue  02   1    _Jim_Bacon_  *         *         (V*)       -
+wb/eng/00/eng_0001   0   6    [WORD]    IN         (PP*               -    -   -    _Jim_Bacon_  *         *      (ARG2*        -
+wb/eng/00/eng_0001   0   7    [WORD]    NN         (NP*               -    -   -    _Jim_Bacon_  *         *           *        -
+wb/eng/00/eng_0001   0   8    [WORD]   NNS            *)))))))        -    -   -    _Jim_Bacon_  *         *)          *)       -
+wb/eng/00/eng_0001   0   9    [WORD]     .            *))             -    -   -    _Jim_Bacon_  *         *           *        -
+
+wb/eng/00/eng_0001   0    0    [WORD]     IN   (TOP(S(PP*                          -    -   -    _Jim_Bacon_  *    (ARGM-PRP*           *           *           *               *        -
+wb/eng/00/eng_0001   0    1    [WORD]     DT      (NP(NP*                          -    -   -    _Jim_Bacon_  *             *           *           *           *               *        -
+wb/eng/00/eng_0001   0    2    [WORD]     NN            *)                         -    -   -    _Jim_Bacon_  *             *           *           *           *               *        -
+wb/eng/00/eng_0001   0    3    [WORD]     IN         (PP*                          -    -   -    _Jim_Bacon_  *             *           *           *           *               *        -
+wb/eng/00/eng_0001   0    4    [WORD]     NN         (NP*))))                      -    -   -    _Jim_Bacon_  *             *)          *           *           *               *        -
+wb/eng/00/eng_0001   0    5    [WORD]      ,            *                          -    -   -    _Jim_Bacon_  *             *           *           *           *               *        -
+wb/eng/00/eng_0001   0    6    [WORD]    PRP         (NP*)                         -    -   -    _Jim_Bacon_  *        (ARG0*)          *           *           *               *      (30)
+wb/eng/00/eng_0001   0    7    [WORD]    VBP         (VP*                      invite  01   3    _Jim_Bacon_  *           (V*)          *           *           *               *        -
+wb/eng/00/eng_0001   0    8    [WORD]    PRP         (NP*)                         -    -   -    _Jim_Bacon_  *        (ARG1*)     (ARG0*)          *           *               *        -
+wb/eng/00/eng_0001   0    9    [WORD]     TO       (S(VP*                          -    -   -    _Jim_Bacon_  *        (ARG2*           *           *           *               *        -
+wb/eng/00/eng_0001   0   10    [WORD]     VB         (VP*                 contemplate  01   1    _Jim_Bacon_  *             *         (V*)          *           *               *        -
+wb/eng/00/eng_0001   0   11    [WORD]     DT      (NP(NP*                          -    -   -    _Jim_Bacon_  *             *      (ARG1*      (ARG1*           *               *        -
+wb/eng/00/eng_0001   0   12    [WORD]     NN            *)                         -    -   -    _Jim_Bacon_  *             *           *           *)          *               *        -
+wb/eng/00/eng_0001   0   13    [WORD]    VBN         (VP*                        pose  02   -    _Jim_Bacon_  *             *           *         (V*)          *               *        -
+wb/eng/00/eng_0001   0   14    [WORD]     IN         (PP*                          -    -   -    _Jim_Bacon_  *             *           *      (ARG0*           *               *        -
+wb/eng/00/eng_0001   0   15    [WORD]     DT   (NP(NP(NP*                          -    -   -    _Jim_Bacon_  *             *           *           *      (ARG1*               *      (38
+wb/eng/00/eng_0001   0   16    [WORD]     JJ            *                          -    -   -    _Jim_Bacon_  *             *           *           *           *               *        -
+wb/eng/00/eng_0001   0   17    [WORD]     NN            *                          -    -   -    _Jim_Bacon_  *             *           *           *           *               *        -
+wb/eng/00/eng_0001   0   18    [WORD]     NN            *)                         -    -   -    _Jim_Bacon_  *             *           *           *           *)              *        -
+wb/eng/00/eng_0001   0   19    [WORD]    VBG         (VP*                         sit  01   2    _Jim_Bacon_  *             *           *           *         (V*)              *        -
+wb/eng/00/eng_0001   0   20    [WORD]     IN         (PP*                          -    -   -    _Jim_Bacon_  *             *           *           *      (ARG2*               *        -
+wb/eng/00/eng_0001   0   21    [WORD]   PRP$         (NP*                          -    -   -    _Jim_Bacon_  *             *           *           *           *               *        -
+wb/eng/00/eng_0001   0   22    [WORD]     NN            *))))                      -    -   -    _Jim_Bacon_  *             *           *           *           *)              *        -
+wb/eng/00/eng_0001   0   23    [WORD]     CC            *                          -    -   -    _Jim_Bacon_  *             *           *           *           *               *        -
+wb/eng/00/eng_0001   0   24    [WORD]     DT      (NP(NP*                          -    -   -    _Jim_Bacon_  *             *           *           *           *          (ARG0*        -
+wb/eng/00/eng_0001   0   25    [WORD]     JJ        (NML*                          -    -   -    _Jim_Bacon_  *             *           *           *           *               *        -
+wb/eng/00/eng_0001   0   26    [WORD]     NN            *)                         -    -   -    _Jim_Bacon_  *             *           *           *           *               *        -
+wb/eng/00/eng_0001   0   27    [WORD]     NN            *)                         -    -   -    _Jim_Bacon_  *             *           *           *           *               *)       -
+wb/eng/00/eng_0001   0   28    [WORD]    VBG         (VP*                     collect  01   1    _Jim_Bacon_  *             *           *           *           *             (V*)       -
+wb/eng/00/eng_0001   0   29    [WORD]     NN         (NP*)                         -    -   -    _Jim_Bacon_  *             *           *           *           *          (ARG1*)       -
+wb/eng/00/eng_0001   0   30    [WORD]     IN         (PP*                          -    -   -    _Jim_Bacon_  *             *           *           *           *      (ARGM-LOC*        -
+wb/eng/00/eng_0001   0   31    [WORD]   PRP$         (NP*                          -    -   -    _Jim_Bacon_  *             *           *           *           *               *        -
+wb/eng/00/eng_0001   0   32    [WORD]     NN            *))))))))))))              -    -   -    _Jim_Bacon_  *             *)          *)          *)          *               *)      38)
+wb/eng/00/eng_0001   0   33    [WORD]      .            *))                        -    -   -    _Jim_Bacon_  *             *           *           *           *               *        -
+
+wb/eng/00/eng_0001   0   0    [WORD]   PRP   (TOP(S(NP*)           -    -   -    _Jim_Bacon_  *    (ARG0*)     (38)
+wb/eng/00/eng_0001   0   1    [WORD]   VBP         (VP*       contain  01   1    _Jim_Bacon_  *       (V*)       -
+wb/eng/00/eng_0001   0   2    [WORD]    JJ         (NP*            -    -   -    _Jim_Bacon_  *    (ARG1*        -
+wb/eng/00/eng_0001   0   3    [WORD]   NNS            *))          -    -   -    _Jim_Bacon_  *         *)       -
+wb/eng/00/eng_0001   0   4    [WORD]     :            *))          -    -   -    _Jim_Bacon_  *         *        -
+
+wb/eng/00/eng_0001   0   0    [WORD]    VB   (TOP(S(VP*           -    -   -    _Jim_Bacon_  *             *        -
+wb/eng/00/eng_0001   0   1    [WORD]    RB            *           -    -   -    _Jim_Bacon_  *    (ARGM-NEG*)       -
+wb/eng/00/eng_0001   0   2    [WORD]    VB         (VP*         dump  01   2    _Jim_Bacon_  *           (V*)       -
+wb/eng/00/eng_0001   0   3    [WORD]   PRP         (NP*)          -    -   -    _Jim_Bacon_  *        (ARG1*)     (38)
+wb/eng/00/eng_0001   0   4    [WORD]    IN         (PP*           -    -   -    _Jim_Bacon_  *    (ARGM-LOC*        -
+wb/eng/00/eng_0001   0   5    [WORD]    DT         (NP*           -    -   -    _Jim_Bacon_  *             *        -
+wb/eng/00/eng_0001   0   6    [WORD]    NN            *))))       -    -   -    _Jim_Bacon_  *             *)       -
+wb/eng/00/eng_0001   0   7    [WORD]     .            *))         -    -   -    _Jim_Bacon_  *             *        -
+
+wb/eng/00/eng_0001   0    0    [WORD]    VB   (TOP(S(VP(VP*                   be  01   1    _Jim_Bacon_           *       (V*)              *               *        -
+wb/eng/00/eng_0001   0    1    [WORD]    JJ          (ADJP*))                 -    -   -    _Jim_Bacon_           *    (ARG2*)              *               *        -
+wb/eng/00/eng_0001   0    2    [WORD]    CC               *                   -    -   -    _Jim_Bacon_           *         *               *               *        -
+wb/eng/00/eng_0001   0    3    [WORD]    VB            (VP*               unload  01   1    _Jim_Bacon_           *         *             (V*)              *        -
+wb/eng/00/eng_0001   0    4    [WORD]   PRP            (NP*)                  -    -   -    _Jim_Bacon_           *         *          (ARG1*)              *      (38)
+wb/eng/00/eng_0001   0    5    [WORD]    IN            (PP*                   -    -   -    _Jim_Bacon_           *         *      (ARGM-LOC*               *        -
+wb/eng/00/eng_0001   0    6    [WORD]    CD         (NP(NP*)                  -    -   -    _Jim_Bacon_   (CARDINAL)        *               *               *        -
+wb/eng/00/eng_0001   0    7    [WORD]    IN            (PP*                   -    -   -    _Jim_Bacon_           *         *               *               *        -
+wb/eng/00/eng_0001   0    8    [WORD]    CD         (NP(NP*                   -    -   -    _Jim_Bacon_   (CARDINAL)        *               *          (ARG1*        -
+wb/eng/00/eng_0001   0    9    [WORD]   NNS           (NML*                   -    -   -    _Jim_Bacon_           *         *               *               *        -
+wb/eng/00/eng_0001   0   10    [WORD]    NN               *)                  -    -   -    _Jim_Bacon_           *         *               *               *        -
+wb/eng/00/eng_0001   0   11    [WORD]   NNS               *)                  -    -   -    _Jim_Bacon_           *         *               *               *)       -
+wb/eng/00/eng_0001   0   12    [WORD]   VBN            (VP*             schedule  01   1    _Jim_Bacon_           *         *               *             (V*)       -
+wb/eng/00/eng_0001   0   13    [WORD]    IN            (PP*                   -    -   -    _Jim_Bacon_           *         *               *      (ARGM-LOC*        -
+wb/eng/00/eng_0001   0   14    [WORD]   NNP            (NP*))                 -    -   -    _Jim_Bacon_        (GPE)        *               *               *)     (32)
+wb/eng/00/eng_0001   0   15    [WORD]    DT            (NP*                   -    -   -    _Jim_Bacon_      (DATE*         *               *          (ARG3*        -
+wb/eng/00/eng_0001   0   16    [WORD]   NNP               *))))))))           -    -   -    _Jim_Bacon_           *)        *               *)              *)       -
+wb/eng/00/eng_0001   0   17    [WORD]     .               *))                 -    -   -    _Jim_Bacon_           *         *               *               *        -
+
+wb/eng/00/eng_0001   0    0    [WORD]    IN   (TOP(S(SBAR*                  -    -   -    _Jim_Bacon_  *      *        *     -
+wb/eng/00/eng_0001   0    1    [WORD]   VBN         (S(VP*            landfill  01   -    _Jim_Bacon_  *    (V*)       *     -
+wb/eng/00/eng_0001   0    2    [WORD]    CC              *                  -    -   -    _Jim_Bacon_  *      *        *     -
+wb/eng/00/eng_0001   0    3    [WORD]   VBN              *)))       incinerate  01   -    _Jim_Bacon_  *      *      (V*)    -
+wb/eng/00/eng_0001   0    4    [WORD]     ,              *                  -    -   -    _Jim_Bacon_  *      *        *     -
+wb/eng/00/eng_0001   0    5    [WORD]    JJ        (NP(NP*                  -    -   -    _Jim_Bacon_  *      *        *     -
+wb/eng/00/eng_0001   0    6    [WORD]   NNS              *)                 -    -   -    _Jim_Bacon_  *      *        *     -
+wb/eng/00/eng_0001   0    7    [WORD]    IN           (PP*                  -    -   -    _Jim_Bacon_  *      *        *     -
+wb/eng/00/eng_0001   0    8    [WORD]    JJ           (NP*                  -    -   -    _Jim_Bacon_  *      *        *     -
+wb/eng/00/eng_0001   0    9    [WORD]    JJ              *                  -    -   -    _Jim_Bacon_  *      *        *     -
+wb/eng/00/eng_0001   0   10    [WORD]   NNS              *)))               -    -   -    _Jim_Bacon_  *      *        *     -
+wb/eng/00/eng_0001   0   11    [WORD]    MD           (VP*                  -    -   -    _Jim_Bacon_  *      *        *     -
+wb/eng/00/eng_0001   0   12    [WORD]    VB           (VP*                  -    -   -    _Jim_Bacon_  *      *        *     -
+wb/eng/00/eng_0001   0   13    [WORD]   VBN           (VP*                  -    -   -    _Jim_Bacon_  *      *        *     -
+wb/eng/00/eng_0001   0   14    [WORD]    IN           (PP*                  -    -   -    _Jim_Bacon_  *      *        *     -
+wb/eng/00/eng_0001   0   15    [WORD]    DT           (NP*                  -    -   -    _Jim_Bacon_  *      *        *     -
+wb/eng/00/eng_0001   0   16    [WORD]    NN              *                  -    -   -    _Jim_Bacon_  *      *        *     -
+wb/eng/00/eng_0001   0   17    [WORD]     ,              *                  -    -   -    _Jim_Bacon_  *      *        *     -
+wb/eng/00/eng_0001   0   18    [WORD]    NN              *                  -    -   -    _Jim_Bacon_  *      *        *     -
+wb/eng/00/eng_0001   0   19    [WORD]    CC              *                  -    -   -    _Jim_Bacon_  *      *        *     -
+wb/eng/00/eng_0001   0   20    [WORD]    NN              *)))))             -    -   -    _Jim_Bacon_  *      *        *     -
+wb/eng/00/eng_0001   0   21    [WORD]     .              *))                -    -   -    _Jim_Bacon_  *      *        *     -
+
+wb/eng/00/eng_0001   0    0    [WORD]     NNS      (TOP(S(NP(NP*)                 -    -   -    _Jim_Bacon_           *    (ARG0*             *     -
+wb/eng/00/eng_0001   0    1    [WORD]      CC                  *                  -    -   -    _Jim_Bacon_           *         *             *     -
+wb/eng/00/eng_0001   0    2    [WORD]      NN               (NP*                  -    -   -    _Jim_Bacon_           *         *             *     -
+wb/eng/00/eng_0001   0    3    [WORD]     NNS                  *))                -    -   -    _Jim_Bacon_           *         *)            *     -
+wb/eng/00/eng_0001   0    4    [WORD]     VBP               (VP*                 use  01   1    _Jim_Bacon_           *       (V*)            *     -
+wb/eng/00/eng_0001   0    5    [WORD]      NN     (NP(NP(NP(NML*                  -    -   -    _Jim_Bacon_           *    (ARG1*        (ARG0*     -
+wb/eng/00/eng_0001   0    6    [WORD]      NN                  *)                 -    -   -    _Jim_Bacon_           *         *             *     -
+wb/eng/00/eng_0001   0    7    [WORD]     NNS                  *)                 -    -   -    _Jim_Bacon_           *         *             *     -
+wb/eng/00/eng_0001   0    8    [WORD]  -LRB-                   *                  -    -   -    _Jim_Bacon_           *         *             *     -
+wb/eng/00/eng_0001   0    9    [WORD]     NNP               (NP*)                 -    -   -    _Jim_Bacon_           *         *             *     -
+wb/eng/00/eng_0001   0   10    [WORD]  -RRB-                   *)                 -    -   -    _Jim_Bacon_           *         *             *)    -
+wb/eng/00/eng_0001   0   11    [WORD]       ,                  *                  -    -   -    _Jim_Bacon_           *         *             *     -
+wb/eng/00/eng_0001   0   12    [WORD]      DT   (SBAR(WHNP(WHNP*)                 -    -   -    _Jim_Bacon_           *         *      (R-ARG0*     -
+wb/eng/00/eng_0001   0   13    [WORD]      IN               (PP*                  -    -   -    _Jim_Bacon_           *         *             *     -
+wb/eng/00/eng_0001   0   14    [WORD]     WDT             (WHNP*)))               -    -   -    _Jim_Bacon_           *         *             *)    -
+wb/eng/00/eng_0001   0   15    [WORD]     VBP             (S(VP*             contain  01   1    _Jim_Bacon_           *         *           (V*)    -
+wb/eng/00/eng_0001   0   16    [WORD]      RB         (NP(NP(QP*                  -    -   -    _Jim_Bacon_           *         *        (ARG1*     -
+wb/eng/00/eng_0001   0   17    [WORD]      JJ                  *                  -    -   -    _Jim_Bacon_           *         *             *     -
+wb/eng/00/eng_0001   0   18    [WORD]      IN                  *                  -    -   -    _Jim_Bacon_           *         *             *     -
+wb/eng/00/eng_0001   0   19    [WORD]      CD                  *)                 -    -   -    _Jim_Bacon_  (QUANTITY*         *             *     -
+wb/eng/00/eng_0001   0   20    [WORD]     NNS                  *)                 -    -   -    _Jim_Bacon_           *)        *             *     -
+wb/eng/00/eng_0001   0   21    [WORD]      IN               (PP*                  -    -   -    _Jim_Bacon_           *         *             *     -
+wb/eng/00/eng_0001   0   22    [WORD]      NN               (NP*))))))))          -    -   -    _Jim_Bacon_           *         *)            *)    -
+wb/eng/00/eng_0001   0   23    [WORD]       .                  *))                -    -   -    _Jim_Bacon_           *         *             *     -
+
+wb/eng/00/eng_0001   0   0    [WORD]    JJ   (TOP(S(NP(NML*            -    -   -    _Jim_Bacon_  *    (ARG0*     -
+wb/eng/00/eng_0001   0   1    [WORD]    NN                *)           -    -   -    _Jim_Bacon_  *         *     -
+wb/eng/00/eng_0001   0   2    [WORD]   NNS                *            -    -   -    _Jim_Bacon_  *         *     -
+wb/eng/00/eng_0001   0   3    [WORD]    CC                *            -    -   -    _Jim_Bacon_  *         *     -
+wb/eng/00/eng_0001   0   4    [WORD]   NNS                *)           -    -   -    _Jim_Bacon_  *         *)    -
+wb/eng/00/eng_0001   0   5    [WORD]   VBP             (VP*       contain  01   1    _Jim_Bacon_  *       (V*)    -
+wb/eng/00/eng_0001   0   6    [WORD]    NN             (NP*))          -    -   -    _Jim_Bacon_  *    (ARG1*)    -
+wb/eng/00/eng_0001   0   7    [WORD]     .                *))          -    -   -    _Jim_Bacon_  *         *     -
+
+wb/eng/00/eng_0001   0    0    [WORD]   VBN   (TOP(S(NP(NP*           print  01   -    _Jim_Bacon_  *       (V*)     (ARG0*     -
+wb/eng/00/eng_0001   0    1    [WORD]    NN               *              -    -   1    _Jim_Bacon_  *    (ARG1*)          *     -
+wb/eng/00/eng_0001   0    2    [WORD]   NNS               *)             -    -   -    _Jim_Bacon_  *    (ARG1*)          *     -
+wb/eng/00/eng_0001   0    3    [WORD]    CC               *              -    -   -    _Jim_Bacon_  *         *           *     -
+wb/eng/00/eng_0001   0    4    [WORD]   NNS         (NP(NP*)             -    -   -    _Jim_Bacon_  *         *           *     -
+wb/eng/00/eng_0001   0    5    [WORD]    IN            (PP*              -    -   -    _Jim_Bacon_  *         *           *     -
+wb/eng/00/eng_0001   0    6    [WORD]    JJ            (NP*              -    -   -    _Jim_Bacon_  *         *           *     -
+wb/eng/00/eng_0001   0    7    [WORD]   NNS               *))))          -    -   -    _Jim_Bacon_  *         *           *)    -
+wb/eng/00/eng_0001   0    8    [WORD]   VBP            (VP*         contain  01   1    _Jim_Bacon_  *         *         (V*)    -
+wb/eng/00/eng_0001   0    9    [WORD]    JJ         (NP(NP*              -    -   -    _Jim_Bacon_  *         *      (ARG1*     -
+wb/eng/00/eng_0001   0   10    [WORD]   NNS               *)             -    -   -    _Jim_Bacon_  *         *           *     -
+wb/eng/00/eng_0001   0   11    [WORD]    IN            (PP*              -    -   -    _Jim_Bacon_  *         *           *     -
+wb/eng/00/eng_0001   0   12    [WORD]    NN            (NP*              -    -   -    _Jim_Bacon_  *         *           *     -
+wb/eng/00/eng_0001   0   13    [WORD]     ,               *              -    -   -    _Jim_Bacon_  *         *           *     -
+wb/eng/00/eng_0001   0   14    [WORD]    NN               *              -    -   -    _Jim_Bacon_  *         *           *     -
+wb/eng/00/eng_0001   0   15    [WORD]     ,               *              -    -   -    _Jim_Bacon_  *         *           *     -
+wb/eng/00/eng_0001   0   16    [WORD]    NN               *              -    -   -    _Jim_Bacon_  *         *           *     -
+wb/eng/00/eng_0001   0   17    [WORD]    CC               *              -    -   -    _Jim_Bacon_  *         *           *     -
+wb/eng/00/eng_0001   0   18    [WORD]    NN               *))))          -    -   -    _Jim_Bacon_  *         *           *)    -
+wb/eng/00/eng_0001   0   19    [WORD]     .               *))            -    -   -    _Jim_Bacon_  *         *           *     -
+
+wb/eng/00/eng_0001   0    0    [WORD]     ``       (TOP(SINV*                      -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0    1    [WORD]     RB   (S(S(NP(NP(QP*                      -    -       -    _Jim_Bacon_  (PERSON*         *           *           *               *               *      (ARG1*        -
+wb/eng/00/eng_0001   0    2    [WORD]     CD                *                      -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0    3    [WORD]   HYPH                *                      -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0    4    [WORD]     CD                *)                     -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0    5    [WORD]     NN                *)                     -    -       -    _Jim_Bacon_         *)        *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0    6    [WORD]     IN             (PP*                      -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0    7    [WORD]     DT             (NP*                      -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0    8    [WORD]     JJ                *                      -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0    9    [WORD]    NNS                *)))                   -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   10    [WORD]    VBP             (VP*                      -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   11    [WORD]     RB           (ADVP*)                     -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   12    [WORD]    VBN             (VP*                      -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   13    [WORD]     IN             (PP*                      -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   14    [WORD]    NNS             (NP*                      -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   15    [WORD]     CC                *                      -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   16    [WORD]    NNS                *)))))                 -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   17    [WORD]      ,                *                      -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   18    [WORD]     DT           (S(NP*)                     -    -       -    _Jim_Bacon_         *    (ARG1*)          *           *               *               *           *        -
+wb/eng/00/eng_0001   0   19    [WORD]    VBZ             (VP*                      be  01       1    _Jim_Bacon_         *       (V*)          *           *               *               *           *        -
+wb/eng/00/eng_0001   0   20    [WORD]     DT             (NP*                      -    -       -    _Jim_Bacon_         *    (ARG2*           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   21    [WORD]     JJ                *                      -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   22    [WORD]     NN                *                      -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   23    [WORD]     TO           (S(VP*                      -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   24    [WORD]     VB             (VP*                     get  01   11.37    _Jim_Bacon_         *         *         (V*)          *               *               *           *        -
+wb/eng/00/eng_0001   0   25    [WORD]    VBN             (VP*                      -    -       -    _Jim_Bacon_         *         *      (ARG1*           *               *               *           *        -
+wb/eng/00/eng_0001   0   26    [WORD]     IN             (PP*                      -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   27    [WORD]     DT          (NP(NP*                      -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *      (19
+wb/eng/00/eng_0001   0   28    [WORD]     JJ                *                      -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   29    [WORD]     NN                *                      -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   30    [WORD]     CC                *                      -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   31    [WORD]     NN                *)                     -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   32    [WORD]    WDT      (SBAR(WHNP*)                     -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   33    [WORD]    VBZ           (S(VP*                      -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   34    [WORD]    VBN             (VP*                      -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   35    [WORD]    VBG             (VP*                      -    -       1    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   36    [WORD]     NN             (NP*))))))))))            -    -       -    _Jim_Bacon_         *         *           *)          *               *               *           *       19)
+wb/eng/00/eng_0001   0   37    [WORD]     CC                *                      -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   38    [WORD]     VB             (VP*                    know  01       1    _Jim_Bacon_         *         *           *         (V*)              *               *           *        -
+wb/eng/00/eng_0001   0   39    [WORD]    PRP      (SBAR(S(NP*)                     -    -       -    _Jim_Bacon_         *         *           *      (ARG1*          (ARG1*)         (ARG1*)          *      (19)
+wb/eng/00/eng_0001   0   40    [WORD]     MD             (VP*                      -    -       -    _Jim_Bacon_         *         *           *           *      (ARGM-MOD*)     (ARGM-MOD*)          *        -
+wb/eng/00/eng_0001   0   41    [WORD]     VB             (VP*                      -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   42    [WORD]     RB           (ADVP*)                     -    -       -    _Jim_Bacon_         *         *           *           *      (ARGM-MNR*)     (ARGM-MNR*)          *        -
+wb/eng/00/eng_0001   0   43    [WORD]    VBN             (VP*                   reuse  01       -    _Jim_Bacon_         *         *           *           *             (V*)              *           *        -
+wb/eng/00/eng_0001   0   44    [WORD]     CC                *                      -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   45    [WORD]    VBN                *))))))))))))     recycle  01       -    _Jim_Bacon_         *         *)          *           *)              *             (V*)          *)       -
+wb/eng/00/eng_0001   0   46    [WORD]      ,                *                      -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   47    [WORD]     ''                *                      -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   48    [WORD]    VBD             (VP*)                    say  01       1    _Jim_Bacon_         *         *           *           *               *               *         (V*)       -
+wb/eng/00/eng_0001   0   49    [WORD]    NNP       (NP(NP(NP*                      -    -       -    _Jim_Bacon_     (ORG*         *           *           *               *               *      (ARG0*        -
+wb/eng/00/eng_0001   0   50    [WORD]    NNP                *                      -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   51    [WORD]    NNP                *                      -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   52    [WORD]    POS                *)                     -    -       -    _Jim_Bacon_         *)        *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   53    [WORD]    NNP                *)                     -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   54    [WORD]      ,                *                      -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   55    [WORD]    NNP             (NP*                      -    -       -    _Jim_Bacon_  (PERSON*         *           *           *               *               *           *        -
+wb/eng/00/eng_0001   0   56    [WORD]    NNP                *))                    -    -       -    _Jim_Bacon_         *)        *           *           *               *               *           *)       -
+wb/eng/00/eng_0001   0   57    [WORD]      .                *))                    -    -       -    _Jim_Bacon_         *         *           *           *               *               *           *        -
+
+wb/eng/00/eng_0001   0   0    [WORD]    VB   (TOP(S(VP*            click  01   1    _Jim_Bacon_  *           (V*)          *     -
+wb/eng/00/eng_0001   0   1    [WORD]    RB       (ADVP*)              -    -   -    _Jim_Bacon_  *        (ARG1*)          *     -
+wb/eng/00/eng_0001   0   2    [WORD]    TO       (S(VP*               -    -   -    _Jim_Bacon_  *    (ARGM-PRP*           *     -
+wb/eng/00/eng_0001   0   3    [WORD]    VB         (VP*             find  01   1    _Jim_Bacon_  *             *         (V*)    -
+wb/eng/00/eng_0001   0   4    [WORD]    DT      (NP(NP*               -    -   -    _Jim_Bacon_  *             *      (ARG1*     -
+wb/eng/00/eng_0001   0   5    [WORD]    NN            *               -    -   -    _Jim_Bacon_  *             *           *     -
+wb/eng/00/eng_0001   0   6    [WORD]    NN            *)              -    -   -    _Jim_Bacon_  *             *           *     -
+wb/eng/00/eng_0001   0   7    [WORD]    IN         (PP*               -    -   -    _Jim_Bacon_  *             *           *     -
+wb/eng/00/eng_0001   0   8    [WORD]   PRP         (NP*)))))))        -    -   -    _Jim_Bacon_  *             *)          *)    -
+wb/eng/00/eng_0001   0   9    [WORD]     .            *))             -    -   -    _Jim_Bacon_  *             *           *     -
+
+wb/eng/00/eng_0001   0   0    [WORD]   JJ   (TOP(NP*      -   -   -    _Ray_Hyde_  *   -
+wb/eng/00/eng_0001   0   1    [WORD]   NN          *      -   -   -    _Ray_Hyde_  *   -
+wb/eng/00/eng_0001   0   2    [WORD]    .          *))    -   -   -    _Ray_Hyde_  *   -
+
+wb/eng/00/eng_0001   0    0    [WORD]   PRP    (TOP(S(NP*)                         -    -   -    _Ray_Hyde_      *        (ARG0*)              *           *        *               *             *      (30)
+wb/eng/00/eng_0001   0    1    [WORD]    MD          (VP*                          -    -   -    _Ray_Hyde_      *    (ARGM-MOD*)              *           *        *               *             *        -
+wb/eng/00/eng_0001   0    2    [WORD]    VB          (VP*                        feel  01   1    _Ray_Hyde_      *           (V*)              *           *        *               *             *        -
+wb/eng/00/eng_0001   0    3    [WORD]    DT    (ADJP(NML*                          -    -   -    _Ray_Hyde_      *        (ARG1*               *           *        *               *             *        -
+wb/eng/00/eng_0001   0    4    [WORD]    NN             *)                         -    -   -    _Ray_Hyde_      *             *               *           *        *               *             *        -
+wb/eng/00/eng_0001   0    5    [WORD]   JJR             *                          -    -   -    _Ray_Hyde_      *             *               *           *        *               *             *        -
+wb/eng/00/eng_0001   0    6    [WORD]    IN          (PP*                          -    -   -    _Ray_Hyde_      *             *               *           *        *               *             *        -
+wb/eng/00/eng_0001   0    7    [WORD]   PRP          (NP*)))                       -    -   -    _Ray_Hyde_      *             *)              *           *        *               *             *        -
+wb/eng/00/eng_0001   0    8    [WORD]    IN        (SBAR*                          -    -   -    _Ray_Hyde_      *    (ARGM-ADV*               *           *        *               *             *        -
+wb/eng/00/eng_0001   0    9    [WORD]    DT        (S(NP*                          -    -   -    _Ray_Hyde_      *             *               *      (ARG1*        *          (ARG1*             *        -
+wb/eng/00/eng_0001   0   10    [WORD]    NN             *)                         -    -   -    _Ray_Hyde_      *             *               *           *)       *               *)            *        -
+wb/eng/00/eng_0001   0   11    [WORD]   VBD          (VP*                          -    -   -    _Ray_Hyde_      *             *               *           *        *               *             *        -
+wb/eng/00/eng_0001   0   12    [WORD]    RB             *                          -    -   -    _Ray_Hyde_      *             *      (ARGM-NEG*)          *        *               *             *        -
+wb/eng/00/eng_0001   0   13    [WORD]    VB          (VP*                        wind  02   6    _Ray_Hyde_      *             *             (V*)          *        *               *             *        -
+wb/eng/00/eng_0001   0   14    [WORD]    RP         (PRT*)                         -    -   -    _Ray_Hyde_      *             *               *           *        *               *             *        -
+wb/eng/00/eng_0001   0   15    [WORD]   VBG     (S(VP(VP*                          go  01   1    _Ray_Hyde_      *             *          (ARG1*         (V*)       *               *             *        -
+wb/eng/00/eng_0001   0   16    [WORD]    IN          (PP*                          -    -   -    _Ray_Hyde_      *             *               *      (ARG4*        *               *             *        -
+wb/eng/00/eng_0001   0   17    [WORD]   NNP          (NP*)))                       -    -   -    _Ray_Hyde_   (GPE)            *               *           *)       *               *             *      (24)
+wb/eng/00/eng_0001   0   18    [WORD]    CC             *                          -    -   -    _Ray_Hyde_      *             *               *           *        *               *             *        -
+wb/eng/00/eng_0001   0   19    [WORD]   VBG          (VP*                          be  03   1    _Ray_Hyde_      *             *               *           *      (V*)              *             *        -
+wb/eng/00/eng_0001   0   20    [WORD]    ``          (VP*                          -    -   -    _Ray_Hyde_      *             *               *           *        *               *             *        -
+wb/eng/00/eng_0001   0   21    [WORD]   VBN             *                     recycle  01   1    _Ray_Hyde_      *             *               *           *        *             (V*)            *        -
+wb/eng/00/eng_0001   0   22    [WORD]    ''             *                          -    -   -    _Ray_Hyde_      *             *               *           *        *               *             *        -
+wb/eng/00/eng_0001   0   23    [WORD]    IN          (PP*                          -    -   -    _Ray_Hyde_      *             *               *           *        *      (ARGM-MNR*             *        -
+wb/eng/00/eng_0001   0   24    [WORD]    DT       (NP(NP*                          -    -   -    _Ray_Hyde_      *             *               *           *        *               *        (ARG1*        -
+wb/eng/00/eng_0001   0   25    [WORD]    NN             *)                         -    -   -    _Ray_Hyde_      *             *               *           *        *               *             *)       -
+wb/eng/00/eng_0001   0   26    [WORD]   WDT   (SBAR(WHNP*)                         -    -   -    _Ray_Hyde_      *             *               *           *        *               *      (R-ARG1*)       -
+wb/eng/00/eng_0001   0   27    [WORD]   VBZ        (S(VP*                          be  01   1    _Ray_Hyde_      *             *               *           *        *               *           (V*)       -
+wb/eng/00/eng_0001   0   28    [WORD]    RB        (ADJP*                          -    -   -    _Ray_Hyde_      *             *               *           *        *               *        (ARG2*        -
+wb/eng/00/eng_0001   0   29    [WORD]    JJ             *))))))))))))))))          -    -   -    _Ray_Hyde_      *             *)              *)          *        *               *)            *)       -
+wb/eng/00/eng_0001   0   30    [WORD]     .             *))                        -    -   -    _Ray_Hyde_      *             *               *           *        *               *             *        -
+
+wb/eng/00/eng_0001   0    0    [WORD]   P

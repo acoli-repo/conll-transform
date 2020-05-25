@@ -1,0 +1,59 @@
+# ID	FORM	LEMMA	PLEMMA	POS	PPOS	FEAT	PFEAT	HEAD	PHEAD	DEPREL	PDEPREL	FILLPRED	PRED	APREDS															
+1	Z	z	z	R	R	SubPOS=R|Cas=2	SubPOS=R|Cas=2	10	10	AuxP	AuxP	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_
+2	této	tento	tento	P	P	SubPOS=D|Gen=F|Num=S|Cas=2	SubPOS=D|Gen=F|Num=S|Cas=2	3	3	Atr	Atr	Y	tento	_	RSTR	_	_	_	_	_	_	_	_	_	_	_	_	_	_
+3	knihy	kniha	kniha	N	N	SubPOS=N|Gen=F|Num=S|Cas=2|Neg=A	SubPOS=N|Gen=F|Num=S|Cas=2|Neg=A	1	1	Adv	Adv	Y	kniha	_	_	_	_	_	_	_	DIR1	_	_	_	_	_	_	_	_
+4	-	-	-	Z	Z	SubPOS=:	SubPOS=:	8	8	AuxG	AuxG	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_
+5	po	po	po	R	R	SubPOS=R|Cas=6	SubPOS=R|Cas=6	8	8	AuxP	AuxP	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_
+6	mnoha	mnoho	mnoho	C	C	SubPOS=a|Cas=6	SubPOS=a|Cas=6	7	7	Atr	Atr	Y	mnoho	_	_	_	RSTR	_	_	_	_	_	_	_	_	_	_	_	_
+7	stránkách	stránka	stránka	N	N	SubPOS=N|Gen=F|Num=P|Cas=6|Neg=A	SubPOS=N|Gen=F|Num=P|Cas=6|Neg=A	5	5	Adv	Adv	Y	stránka	_	_	_	_	REG	_	_	_	_	_	_	_	_	_	_	_
+8	pobuřující	pobuřující	pobuřující	A	A	SubPOS=G|Gen=F|Num=S|Cas=2|Neg=A	SubPOS=G|Gen=F|Num=S|Cas=2|Neg=A	3	3	Atr	Atr	Y	pobuřující	_	RSTR	_	_	_	_	_	_	_	_	_	_	_	_	_	_
+9	-	-	-	Z	Z	SubPOS=:	SubPOS=:	8	8	AuxG	AuxG	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_
+10	lze	lze	lze	V	V	SubPOS=B|Num=S|Per=3|Ten=P|Neg=A|Voi=A	SubPOS=B|Num=S|Per=3|Ten=P|Neg=A|Voi=A	0	0	Pred	Pred	Y	v-w1757f1	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_
+11	totiž	totiž	totiž	D	D	SubPOS=b	SubPOS=b	10	10	AuxY	AuxY	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_
+12	Linda	Lind	Lind	N	N	SubPOS=N|Gen=M|Num=S|Cas=4|Neg=A|Sem=S	SubPOS=N|Gen=M|Num=S|Cas=4|Neg=A|Sem=S	13	13	Obj	Obj	Y	Lind	_	_	_	_	_	_	_	PAT	_	_	_	_	_	_	_	_
+13	poznat	poznat	poznat	V	V	SubPOS=f|Neg=A	SubPOS=f|Neg=A	10	10	Sb	Sb	Y	v-w4210f3	_	_	_	_	_	ACT	_	_	_	_	_	_	_	_	_	_
+14	jako	jako	jako	J	J	SubPOS=,	SubPOS=,	15	15	AuxY	AuxY	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_
+15	mistra	mistr	mistr	N	N	SubPOS=N|Gen=M|Num=S|Cas=4|Neg=A	SubPOS=N|Gen=M|Num=S|Cas=4|Neg=A	12	12	Atv	Atv	Y	mistr	_	_	_	_	_	_	COMPL2	COMPL	_	_	_	_	_	_	_	_
+16	protikladu	protiklad	protiklad	N	N	SubPOS=N|Gen=I|Num=S|Cas=2|Neg=A	SubPOS=N|Gen=I|Num=S|Cas=2|Neg=A	15	15	Atr	Atr	Y	protiklad	_	_	_	_	_	_	_	_	APP	_	_	_	_	_	_	_
+17	,	,	,	Z	Z	SubPOS=:	SubPOS=:	20	20	AuxX	AuxX	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_
+18	který	který	který	P	P	SubPOS=4|Gen=Y|Num=S|Cas=1	SubPOS=4|Gen=Y|Num=S|Cas=1	20	20	Sb	Sb	Y	který	_	_	_	_	_	_	_	_	_	_	_	ACT	_	_	_	_
+19	prý	prý	prý	T	T	SubPOS=T	SubPOS=T	20	20	AuxY	AuxY	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_
+20	nešetří	šetřit	šetřit	V	V	SubPOS=B|Num=S|Per=3|Ten=P|Neg=N|Voi=A	SubPOS=B|Num=S|Per=3|Ten=P|Neg=N|Voi=A	15	15	Atr	Atr	Y	v-w6711f1	_	_	_	_	_	_	_	_	RSTR	_	_	_	_	_	_	_
+21	sebe	se	se	P	P	SubPOS=6|Num=X|Cas=4	SubPOS=6|Num=X|Cas=4	26	26	Obj_M	Obj_M	Y	se	_	_	_	_	_	_	_	_	_	_	_	PAT	_	_	_	_
+22	,	,	,	Z	Z	SubPOS=:	SubPOS=:	26	26	AuxX	AuxX	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_
+23	čtenáře	čtenář	čtenář	N	N	SubPOS=N|Gen=M|Num=P|Cas=4|Neg=A	SubPOS=N|Gen=M|Num=P|Cas=4|Neg=A	26	26	Obj_M	Obj_M	Y	čtenář	_	_	_	_	_	_	_	_	_	_	_	PAT	_	_	_	_
+24	,	,	,	Z	Z	SubPOS=:	SubPOS=:	26	26	AuxX	AuxX	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_
+25	Židy	Žid	Žid	N	N	SubPOS=N|Gen=M|Num=P|Cas=4|Neg=A|Sem=E	SubPOS=N|Gen=M|Num=P|Cas=4|Neg=A|Sem=E	26	26	Obj_M	Obj_M	Y	Žid	_	_	_	_	_	_	_	_	_	_	_	PAT	_	_	_	_
+26	ani	ani	ani	J	J	SubPOS=^	SubPOS=^	20	20	Coord	Coord	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_
+27	Němce	Němec	Němec	N	N	SubPOS=N|Gen=M|Num=P|Cas=4|Neg=A|Sem=E	SubPOS=N|Gen=M|Num=P|Cas=4|Neg=A|Sem=E	26	26	Obj_M	Obj_M	Y	Němec	_	_	_	_	_	_	_	_	_	_	_	PAT	_	_	_	_
+28	.	.	.	Z	Z	SubPOS=:	SubPOS=:	0	0	AuxK	AuxK	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_	_
+																													
+1	W.	w.	w.	NNP	NNP	_	_	3	3	NAME	NAME	_	_	_	_	_	_	_	_										
+2	Ed	ed	ed	NNP	NNP	_	_	3	3	NAME	NAME	_	_	_	_	_	_	_	_										
+3	Tyler	tyler	tyler	NNP	NNP	_	_	18	18	SBJ	SBJ	_	_	_	_	A1	_	_	_										
+4	,	,	,	,	,	_	_	3	3	P	P	_	_	_	_	_	_	_	_										
+5	37	37	37	CD	CD	_	_	6	6	NMOD	NMOD	_	_	_	_	_	_	_	_										
+6	years	year	year	NNS	NNS	_	_	7	7	AMOD	AMOD	_	_	_	_	_	_	_	_										
+7	old	old	old	JJ	JJ	_	_	3	3	NMOD	NMOD	_	_	_	_	_	_	_	_										
+8	,	,	,	,	,	_	_	3	3	P	P	_	_	_	_	_	_	_	_										
+9	a	a	a	DT	DT	_	_	12	12	NMOD	NMOD	_	_	_	_	_	_	_	_										
+10	senior	senior	senior	JJ	JJ	_	_	12	12	NMOD	NMOD	_	_	A3	_	_	_	_	_										
+11	vice	vice	vice	NN	NN	_	_	12	12	NMOD	NMOD	_	_	A3	_	_	_	_	_										
+12	president	president	president	NN	NN	_	_	3	3	APPO	APPO	Y	president.01	A0	_	_	_	_	_										
+13	at	at	at	IN	IN	_	_	12	12	LOC	LOC	_	_	A2	_	_	_	_	_										
+14	this	this	this	DT	DT	_	_	16	16	NMOD	NMOD	_	_	_	_	_	_	_	_										
+15	printing	print	print	VBG	VBG	_	_	16	16	NMOD	NMOD	_	_	_	A1	_	_	_	_										
+16	concern	concern	concern	NN	NN	_	_	13	13	PMOD	PMOD	Y	concern.02	_	A0	_	_	_	_										
+17	,	,	,	,	,	_	_	3	3	P	P	_	_	_	_	_	_	_	_										
+18	was	be	be	VBD	VBD	_	_	0	0	ROOT	ROOT	_	_	_	_	_	_	_	_										
+19	elected	elect	elect	VBN	VBN	_	_	18	18	VC	VC	Y	elect.01	_	_	_	_	_	_										
+20	president	president	president	NN	NN	_	_	19	19	OPRD	OPRD	Y	president.01	_	_	A2	A0	_	_										
+21	of	of	of	IN	IN	_	_	20	20	NMOD	NMOD	_	_	_	_	_	A2	_	_										
+22	its	its	its	PRP$	PRP$	_	_	24	24	NMOD	NMOD	_	_	_	_	_	_	A2	_										
+23	technology	technology	technology	NN	NN	_	_	24	24	NMOD	NMOD	_	_	_	_	_	_	A1	_										
+24	group	group	group	NN	NN	_	_	21	21	PMOD	PMOD	Y	group.01	_	_	_	_	_	_										
+25	,	,	,	,	,	_	_	20	20	P	P	_	_	_	_	_	_	_	_										
+26	a	a	a	DT	DT	_	_	28	28	NMOD	NMOD	_	_	_	_	_	_	_	_										
+27	new	new	new	JJ	JJ	_	_	28	28	NMOD	NMOD	_	_	_	_	_	_	_	AM-TMP										
+28	position	position	position	NN	NN	_	_	20	20	APPO	APPO	Y	position.02	_	_	_	_	_	A1-REF										
+29	.	.	.	.	.	_	_	18	18	P	P	_	_	_	_	_	_	_	_										

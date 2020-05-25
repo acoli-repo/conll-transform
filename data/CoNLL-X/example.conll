@@ -1,0 +1,73 @@
+# Using CoNLL-X Shared Task format
+# (We also allow comments and escape codes)
+
+1	Cathy	Cathy	N	N	_	2	su	_	_
+2	zag	zie	V	V	_	0	ROOT	_	_
+3	hen	hen	Pron	Pron	_	2	obj1	_	_
+4	wild	wild	Adj	Adj	_	5	mod	_	_
+5	zwaaien	zwaai	N	N	_	2	vc	_	_
+6	.	.	Punc	Punc	_	5	punct	_	_
+
+1	Of	of	Conj	Conj	_	0	ROOT	_	_
+2	ze	ze	Pron	Pron	_	3	su	_	_
+3	had	heb	V	V	_	0	ROOT	_	_
+4	gewoon	gewoon	Adj	Adj	_	10	mod	_	_
+5	met	met	Prep	Prep	_	10	mod	_	_
+6	haar	haar	Pron	Pron	_	7	det	_	_
+7	vriendinnen	vriendin	N	N	_	5	obj1	_	_
+8	rond	rond	Adv	Adv	_	10	svp	_	_
+9	kunnen	kan	V	V	_	3	vc	_	_
+10	slenteren	slenter	V	V	_	9	vc	_	_
+11	in	in	Prep	Prep	_	10	mod	_	_
+12	de	de	Art	Art	_	13	det	_	_
+13	buurt	buurt	N	N	_	11	obj1	_	_
+14	van	van	Prep	Prep	_	13	mod	_	_
+15	Trafalgar_Square	Trafalgar_Square	_	_	_	14	obj1	_	_
+16	.	.	Punc	Punc	_	15	punct	_	_
+
+1	Dat	dat	Pron	Pron	_	2	det	_	_
+2	werkwoord	werkwoord	N	N	_	6	obj1	_	_
+3	had	heb	V	V	_	0	ROOT	_	_
+4	ze	ze	Pron	Pron	_	6	su	_	_
+5	zelf	zelf	Pron	Pron	_	3	predm	_	_
+6	uitgevonden	vind	V	V	_	3	vc	_	_
+7	.	.	Punc	Punc	_	6	punct	_	_
+
+1	Het	het	Pron	Pron	_	2	su	_	_
+2	hoorde	hoor	V	V	_	0	ROOT	_	_
+3	bij	bij	Prep	Prep	_	2	ld	_	_
+4	de	de	Art	Art	_	6	det	_	_
+5	warme	warm	Adj	Adj	_	6	mod	_	_
+6	zomerdag	zomerdag	N	N	_	3	obj1	_	_
+7	die	die	Pron	Pron	_	6	mod	_	_
+8	ze	ze	Pron	Pron	_	12	su	_	_
+9	ginds	ginds	Adv	Adv	_	12	mod	_	_
+10	achter	achter	Adv	Adv	_	12	svp	_	_
+11	had	heb	V	V	_	7	body	_	_
+12	gelaten	laat	V	V	_	11	vc	_	_
+13	.	.	Punc	Punc	_	12	punct	_	_
+
+1	Ze	ze	Pron	Pron	_	2	su	_	_
+2	hadden	heb	V	V	_	0	ROOT	_	_
+3	languit	languit	Adv	Adv	_	11	mod	_	_
+4	naast	naast	Prep	Prep	_	11	mod	_	_
+5	elkaar	elkaar	Pron	Pron	_	4	obj1	_	_
+6	op	op	Prep	Prep	_	11	ld	_	_
+7	de	de	Art	Art	_	8	det	_	_
+8	strandstoelen	strandstoel	N	N	_	6	obj1	_	_
+9	kunnen	kan	V	V	_	2	vc	_	_
+10	gaan	ga	V	V	_	9	vc	_	_
+11	liggen	lig	V	V	_	10	vc	_	_
+12	.	.	Punc	Punc	_	11	punct	_	_
+
+1	Zij	zij	Pron	Pron	_	2	su	_	_
+2	zou	zal	V	V	_	7	cnj	_	_
+3	mams	mams	N	N	_	4	det	_	_
+4	rug	rug	N	N	_	5	obj1	_	_
+5	ingewreven	wrijf	V	V	_	6	vc	_	_
+6	hebben	heb	V	V	_	2	vc	_	_
+7	en	en	Conj	Conj	_	0	ROOT	_	_
+8	mam	mam	V	V	_	7	cnj	_	_
+9	de	de	Art	Art	_	10	det	_	_
+10	hare	hare	Pron	Pron	_	8	obj1	_	_
+11	.	.	Punc	Punc	_	10	punct	_	_
