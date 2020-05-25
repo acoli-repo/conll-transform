@@ -149,7 +149,7 @@ public class Transformer {
 	
 	public static void main(String[] args) {
 		String baseuri = Transformer.DEFAULT_URI;
-		System.err.println("synopsis: Transformer SRC TGT OWL´[BASEURI]\n"+
+		System.err.println("synopsis: Transformer SRC TGT OWL [BASEURI]\n"+
 				"\tSRC     source format\n"+
 				"\tTGT     target format\n"+
 				"\tOWL     CoNLL-RDF ontology (or a replacement that defines one or more conll:Dialect objects\n"+
