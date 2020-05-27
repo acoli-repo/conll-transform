@@ -135,7 +135,7 @@ if echo $1 | egrep . >&/dev/null; then
 			else
 
 		# transform
-				$JAVA -Dfile.encoding=UTF8 -classpath $CLASSPATH $TRANSFORM $1 $2 $OWL
+				$JAVA -Dfile.encoding=UTF8 -classpath $CLASSPATH $TRANSFORM -silent $1 $2 $OWL
 				#could also add  -Dlog4j.configuration=file:'src/log4j.properties' for another log4j config
 			fi;
 	fi;	

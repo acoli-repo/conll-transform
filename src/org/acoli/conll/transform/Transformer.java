@@ -1,6 +1,7 @@
 package org.acoli.conll.transform;
 
 import java.util.*;
+import java.util.regex.Pattern;
 
 import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.*;
@@ -20,6 +21,12 @@ public class Transformer {
 	final String tgt;
 	final static String BASEURI = "http://ufal.mff.cuni.cz/conll2009-st/task-description.html#";
 	final static String DEFAULT_URI = "http://ignore.me/"; // used as default URI for converting data
+
+	/** encoding features, use local names of properties as keys */
+	final Map<String,String> property2featureSrc;
+
+	/** encoding features, use local names of properties as keys */
+	final Map<String,String> property2featureTgt;
 	
 	Transformer(String src, String tgt, String owl) {
 		System.err.println("loading CoNLL-RDF ontology "+owl);
@@ -87,6 +94,58 @@ public class Transformer {
 			if(sub2super2dist.get(sub).get(sup)==null)
 				sub2super2dist.get(sub).put(sup, dist);
 		}
+		
+		// special symbols
+		property2featureSrc = new Hashtable<String,String>();
+		query = "PREFIX : <"+BASEURI+">\n"
+				+ "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n"
+				+ "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"
+				+ "SELECT DISTINCT ?propertyL ?symbol\n"
+				+ "WHERE { " // reserved symbols
+				+ " { :"+src+" a :Dialect; ?property ?symbol. \n"
+				+ "   ?property rdfs:subPropertyOf+ :hasReservedSymbol .\n"
+				+ "	  BIND(replace(str(?property),'.*[#/]','') AS ?propertyL)\n"
+				+ " } UNION {\n" // encoding (per column)
+				+ "	  ?property :hasMapping [ :dialect :"+src+"; :column ?col; :encoding ?encoding ].\n"
+				+ "   BIND(str(?col) AS ?propertyL)\n"
+				+ "   BIND(replace(str(?encoding),'.*[#/]','') AS ?symbol)\n"
+				+ " } }";
+		results = QueryExecutionFactory.create(QueryFactory.create(query), model).execSelect();
+		
+		while(results.hasNext()) {
+			QuerySolution sol = results.next();
+			String property = ""+sol.getLiteral("?propertyL");
+			String symbol = sol.getLiteral("?symbol").getString();
+			if(property2featureSrc.get(property)!=null) {
+				System.err.println("warning: multiple symbols defined for conll:"+property+" of "+src+": "+property2featureSrc.get(property)+", "+symbol+" (keeping the first)");
+			} else
+				property2featureSrc.put(property, symbol);
+		}
+
+		property2featureTgt = new Hashtable<String,String>();
+		query = "PREFIX : <"+BASEURI+">\n"
+				+ "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n"
+				+ "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"
+				+ "SELECT DISTINCT ?propertyL ?symbol\n"
+				+ "WHERE { " // reserved symbols
+				+ " { ?property rdfs:subPropertyOf+ :hasReservedSymbol .\n"
+				+ "	  BIND(replace(str(?property),'.*[#/]','') AS ?propertyL)\n"
+				+ "   :"+tgt+" ?property ?symbol \n"
+				+ " } UNION {\n" // encoding (per column)
+				+ "	  ?property :hasMapping [ :dialect :"+tgt+"; :column ?col; :encoding ?encoding ].\n"
+				+ "   BIND(str(?col) AS ?propertyL)\n"
+				+ "   BIND(replace(str(?encoding),'.*[#/]','') AS ?symbol)\n"
+				+ " }}";
+		results = QueryExecutionFactory.create(QueryFactory.create(query), model).execSelect();
+		while(results.hasNext()) {
+			QuerySolution sol = results.next();
+			String property = ""+sol.getLiteral("?propertyL");
+			String symbol = sol.getLiteral("?symbol").getString();
+			if(property2featureTgt.get(property)!=null) {
+				System.err.println("warning: multiple values defined for conll:"+property+" of "+tgt+": "+property2featureTgt.get(property)+", "+symbol+" (keeping the first)");
+			} else
+				property2featureTgt.put(property, symbol);
+		}
 	}
 	
 	/** create args for -conll parameter */
@@ -149,21 +208,132 @@ public class Transformer {
 	
 	public static void main(String[] args) {
 		String baseuri = Transformer.DEFAULT_URI;
-		System.err.println("synopsis: Transformer SRC TGT OWL´[BASEURI]\n"+
-				"\tSRC     source format\n"+
-				"\tTGT     target format\n"+
-				"\tOWL     CoNLL-RDF ontology (or a replacement that defines one or more conll:Dialect objects\n"+
-				"\tBASEURI base URI for the data being processed, defaults to "+baseuri+"\n"+
-				"generates CoNLL-RDF calls for reading and writing different dialects\n"+
-				"TODO: reads one-token-per-line TSV (\"CoNLL\") data from stdin, transforms to output format according to the conll:Dialect mapping defined in OWL");
-		Transformer me = new Transformer(args[0], args[1],args[2]);
-		System.out.println("./run.sh CoNLLStreamExtractor "+writeArray(me.extractorArgs(baseuri)));
+		if(args.length <1  ||  !args[0].equals("-silent"))
+			System.err.println("synopsis: Transformer [-silent] SRC TGT OWL´[BASEURI]\n"+
+					"\t-silent suppress this message\n"+
+					"\tSRC     source format\n"+
+					"\tTGT     target format\n"+
+					"\tOWL     CoNLL-RDF ontology (or a replacement that defines one or more conll:Dialect objects\n"+
+					"\tBASEURI base URI for the data being processed, defaults to "+baseuri+"\n"+
+					"generates CoNLL-RDF calls for reading and writing different dialects\n"+
+					"TODO: reads one-token-per-line TSV (\"CoNLL\") data from stdin, transforms to output format according to the conll:Dialect mapping defined in OWL\n"
+					+"NOTE that we generate Bash scripts at the moment, but that escaping (of SPARQL scripts) and paths (classpath, package) need to be adjusted in order to execute it\n"
+					+"CoNLL-RDF JSON configs soon to come.");
+		
+		int i = 0;
+		if(args[0].equals("-silent")) i++;
+		Transformer me = new Transformer(args[i++], args[i++],args[i++]);
+
+		System.err.println("building bash script");
+		System.err.println("\n1. configure preprocessing");		
+		String[] preprocArgs = me.preprocessorArgs();
+		
+		System.err.println("\n2. configure extraction");
+		String[] extractorArgs = me.extractorArgs(baseuri);
+		
+		System.err.println("\n3. configure update");
 		String[] updateArgs = me.updateArgs();
-		if(updateArgs!=null)
-			System.out.println("./run.sh CoNLLRDFUpdater "+writeArray(updateArgs));
-		System.out.println("./run.sh CoNLLRDFFormatter "+writeArray(me.formatterArgs()));
+		
+		System.err.println("\n4. configure formatter");
+		String[] formatterArgs = me.formatterArgs();
+		
+		System.err.println("\n5. configure postprocessing");
+		String[] postprocArgs = me.postprocessorArgs();
+		
+		System.err.println("\n6. writing script");
+		if(preprocArgs!=null) // optional
+			System.out.println("java -classpath bin org.acoli.conll.transform.Preprocessor "+writeArray(preprocArgs) +" | \\");
+		// obligatory
+		System.out.println("./run.sh CoNLLStreamExtractor "+writeArray(extractorArgs)+ " | \\");
+		if(updateArgs!=null) // optional
+			System.out.println("./run.sh CoNLLRDFUpdater "+writeArray(updateArgs) + " | \\");
+		// obligatory
+		System.out.print("./run.sh CoNLLRDFFormatter "+writeArray(formatterArgs));
+		if(postprocArgs!=null) // optional
+			System.out.print(" | \\\njava -classpath bin org.acoli.conll.transform.Postprocessor "+writeArray(postprocArgs));
+		System.out.println();
 	}
 
+	/** arguments for Preprocessor */
+	public String[] preprocessorArgs() {
+		String result = "";
+		
+		String block = property2featureSrc.get("blockSeparator");
+		String col = property2featureSrc.get("colSeparator");
+		String row = property2featureSrc.get("rowSeparator");
+		String comment = property2featureSrc.get("commentMarker");
+		String empty = property2featureSrc.get("emptyAnnotationMarker");
+		
+		if(block!=null && !block.equals(StringTransformer.BLOCK_SEPARATOR)) 
+			result=result+"-block\t\""+block+"\"\t";
+		if(col!=null && !col.equals(StringTransformer.COL_SEPARATOR)) 
+			result=result+"-col\t\""+col+"\"\t";
+		if(row!=null && !row.equals(StringTransformer.ROW_SEPARATOR)) 
+			result=result+"-row\t\""+row+"\"\t";
+		if(comment!=null && !comment.equals(StringTransformer.COMMENT_MARKER)) 
+			result=result+"-comment\t\""+comment+"\"\t";
+		if(empty!=null && !empty.equals(StringTransformer.EMPTY_ANNOTATION)) 
+			result=result+"-empty\t\""+empty+"\"\t";
+
+		
+		for(String prop : property2featureSrc.keySet()) {
+			if(prop.matches("^[0-9]+$")) {
+				col = prop;
+				String encoding = property2featureSrc.get(col);
+				if(encoding.equals("plainEncoding")) { 			// keep it (default)
+				} else if(encoding.equals("bracketEncoding")) { // keep it (default for parsed structures)
+				} else if(encoding.equals("iobesEncoding")) { // transform to bracketEncoding
+					result=result+
+							"-replacement\t"+col+"\t"+
+								"\"^S-(.*)$\"" + "\t" + "\"($1 *)\""+"\t"+
+								"\"^I-(.*)$\"" + "\t" + "\"*\""		+"\t"+
+								"\"^B-(.*)$\"" + "\t" + "\"( *\""	+"\t"+
+								"\"^E-(.*)$\"" + "\t" + "\"* )\""	+"\t"+
+								"\"^O$\"" 	   + "\t" + "\"*\""		+"\t";
+				} else
+					System.err.println("warning: unsupported input encoding \""+encoding+"\"");
+			}
+		}
+
+		if(result.trim().length()==0) return null;
+		return result.trim().split("\t");
+	}
+
+	public String[] postprocessorArgs() {
+		String result = "";
+		
+		String block = property2featureTgt.get("blockSeparator");
+		String col = property2featureTgt.get("colSeparator");
+		String row = property2featureTgt.get("rowSeparator");
+		String comment = property2featureTgt.get("commentMarker");
+		String empty = property2featureTgt.get("emptyAnnotationMarker");
+		
+		if(block!=null && !block.equals(StringTransformer.BLOCK_SEPARATOR)) 
+			result=result+"-block\t\""+block+"\"\t";
+		if(col!=null && !col.equals(StringTransformer.COL_SEPARATOR)) 
+			result=result+"-col\t\""+col+"\"\t";
+		if(row!=null && !row.equals(StringTransformer.ROW_SEPARATOR)) 
+			result=result+"-row\t\""+row+"\"\t";
+		if(comment!=null && !comment.equals(StringTransformer.COMMENT_MARKER)) 
+			result=result+"-comment\t\""+comment+"\"\t";
+		if(empty!=null && !empty.equals(StringTransformer.EMPTY_ANNOTATION)) 
+			result=result+"-empty\t\""+empty+"\"\t";
+		
+		for(String prop : property2featureTgt.keySet()) {
+			if(prop.matches("^[0-9]+$")) {
+				col = prop;
+				String encoding = property2featureTgt.get(col);
+				if(encoding.equals("plainEncoding")) { 			// keep it (default)
+				} else if(encoding.equals("bracketEncoding")) { // keep it (default for parsed structures)
+				} else
+					System.err.println("warning: unsupported output encoding \""+encoding+"\"");
+			}
+		}
+
+		if(result.trim().length()==0) return null;
+		return result.trim().split("\t");
+	}
+	
 	/** create a SPARQL script to transform source into target format; return null for no changes*/
 	public String[] updateArgs() {
 		Hashtable<String,String> tgt2src = new Hashtable<String,String>(); 
