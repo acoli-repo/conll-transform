@@ -209,7 +209,7 @@ public class Transformer {
 	public static void main(String[] args) {
 		String baseuri = Transformer.DEFAULT_URI;
 		if(args.length <1  ||  !args[0].equals("-silent"))
-			System.err.println("synopsis: Transformer [-silent] SRC TGT OWL´[BASEURI]\n"+
+			System.err.println("synopsis: Transformer [-silent] SRC TGT OWL [BASEURI]\n"+
 					"\t-silent suppress this message\n"+
 					"\tSRC     source format\n"+
 					"\tTGT     target format\n"+
