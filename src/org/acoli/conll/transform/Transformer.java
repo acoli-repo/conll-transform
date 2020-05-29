@@ -262,37 +262,50 @@ public class Transformer {
 		String iob2IobesQuery = "PREFIX rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
 				"PREFIX nif:   <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#>\n";
 		for (String col : cols) {
-			iob2IobesQuery += "# Fix CoNLL-99 missencodings\n" +
-					"# Can we merge the two following encodings?\n" +
-					"DELETE { ?word conll:"+col+" \"I\" . }\n" +
+			iob2IobesQuery += "DELETE { ?word conll:"+col+" \"I\" . }\n" +
 					"INSERT { ?word conll:"+col+" \"B\" . }\n" +
 					"WHERE {\n" +
 					"    ?word conll:"+col+" \"I\" .\n" +
 					"    ?prev nif:nextWord ?word .\n" +
-					"    ?prev conll:"+col+" \"O\" .\n" +
+					"    FILTER NOT EXISTS { ?prev conll:"+col+" ?prevAnno . }\n" +
 					"};\n" +
 					"DELETE { ?word conll:"+col+" \"I\" . }\n" +
 					"INSERT { ?word conll:"+col+" \"B\" . }\n" +
 					"WHERE {\n" +
 					"    ?word conll:"+col+" \"I\" .\n" +
-					"    FILTER  NOT EXISTS { ?prev nif:nextWord ?word.}\n" +
+					"    FILTER NOT EXISTS { ?prev nif:nextWord ?word.}\n" +
 					"};\n" +
 					"# Creating new S Markers\n" +
+					"DELETE { ?word conll:"+col+" \"B\" . }\n" +
+					"INSERT { ?word conll:"+col+" ?newIob . }\n" +
+					"WHERE {\n" +
+					"    ?word conll:"+col+" \"B\" .\n" +
+					"    ?word nif:nextWord ?nextWord .\n" +
+					"    FILTER NOT EXISTS { ?nextWord conll:"+col+" ?nextIob .  }\n" +
+					"    BIND(\"S\" AS ?newIob)\n" +
+					"};\n" +
 					"DELETE { ?word conll:"+col+" \"B\" . }\n" +
 					"INSERT { ?word conll:"+col+" ?newIob . } \n" +
 					"WHERE {\n" +
 					"    ?word conll:"+col+" \"B\" .\n" +
 					"    ?word nif:nextWord ?nextWord .\n" +
-					"    ?nextWord conll:"+col+" \"B\".\n" +
+					"    ?nextWord conll:"+col+" ?nextIob .\n" +
+					"    FILTER (?nextIob IN (\"B\", \"S\"))\n" +
 					"    BIND(\"S\" AS ?newIob)\n" +
 					"};\n" +
-					"\n" +
 					"# Inserting new E Markers\n" +
-					"\n" +
 					"DELETE { ?word conll:"+col+" \"I\" . }\n" +
 					"INSERT { ?word conll:"+col+" ?newIob . }\n" +
 					"WHERE {\n" +
-					"    ?word conll:IOB \"I\" .\n" +
+					"    ?word conll:"+col+" \"I\" .\n" +
+					"    ?word nif:nextWord ?nextWord .\n" +
+					"    FILTER NOT EXISTS { ?nextWord conll:"+col+" ?nextIob .  }\n" +
+					"    BIND(\"E\" AS ?newIob)\n" +
+					"};\n" +
+					"DELETE { ?word conll:"+col+" \"I\" . }\n" +
+					"INSERT { ?word conll:"+col+" ?newIob . }\n" +
+					"WHERE {\n" +
+					"    ?word conll:"+col+" \"I\" .\n" +
 					"    ?word nif:nextWord ?nextWord .\n" +
 					"    ?nextWord conll:"+col+" ?nextIob .\n" +
 					"    FILTER (?nextIob IN (\"B\", \"S\"))\n" +
