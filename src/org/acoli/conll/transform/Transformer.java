@@ -461,8 +461,8 @@ public class Transformer {
 				}
 			}
 			String iob2Iobes = createIob2IobesQuery(iobCols);
-			return new String[] {"-updates", "PREFIX conll: <"+BASEURI+">\n"+iob2Iobes+"\n"+updates};
+			return new String[] {"-custom", "-updates", "PREFIX conll: <"+BASEURI+">\n"+iob2Iobes+"\n"+updates};
 		}
-		return new String[] {"-updates", "PREFIX conll: <"+BASEURI+">\n"+updates };
+		return new String[] {"-custom", "-updates", "PREFIX conll: <"+BASEURI+">\n"+updates };
 	}
 }
