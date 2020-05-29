@@ -225,9 +225,11 @@ public class Transformer {
 		Transformer me = new Transformer(args[i++], args[i++],args[i++]);
 
 		System.err.println("building bash script");
-		System.err.println("\n1. configure preprocessing");		
+
+
+		System.err.println("\n1. configure preprocessing");
 		String[] preprocArgs = me.preprocessorArgs();
-		
+
 		System.err.println("\n2. configure extraction");
 		String[] extractorArgs = me.extractorArgs(baseuri);
 		
@@ -254,6 +256,51 @@ public class Transformer {
 		System.out.println();
 	}
 
+
+
+	public String createIob2IobesQuery(List<String> cols) {
+		String iob2IobesQuery = "PREFIX rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+				"PREFIX nif:   <http://persistence.uni-leipzig.org/nlp2rdf/ontologies/nif-core#>\n";
+		for (String col : cols) {
+			iob2IobesQuery += "# Fix CoNLL-99 missencodings\n" +
+					"# Can we merge the two following encodings?\n" +
+					"DELETE { ?word conll:"+col+" \"I\" . }\n" +
+					"INSERT { ?word conll:"+col+" \"B\" . }\n" +
+					"WHERE {\n" +
+					"    ?word conll:"+col+" \"I\" .\n" +
+					"    ?prev nif:nextWord ?word .\n" +
+					"    ?prev conll:"+col+" \"O\" .\n" +
+					"};\n" +
+					"DELETE { ?word conll:"+col+" \"I\" . }\n" +
+					"INSERT { ?word conll:"+col+" \"B\" . }\n" +
+					"WHERE {\n" +
+					"    ?word conll:"+col+" \"I\" .\n" +
+					"    FILTER  NOT EXISTS { ?prev nif:nextWord ?word.}\n" +
+					"};\n" +
+					"# Creating new S Markers\n" +
+					"DELETE { ?word conll:"+col+" \"B\" . }\n" +
+					"INSERT { ?word conll:"+col+" ?newIob . } \n" +
+					"WHERE {\n" +
+					"    ?word conll:"+col+" \"B\" .\n" +
+					"    ?word nif:nextWord ?nextWord .\n" +
+					"    ?nextWord conll:"+col+" \"B\".\n" +
+					"    BIND(\"S\" AS ?newIob)\n" +
+					"};\n" +
+					"\n" +
+					"# Inserting new E Markers\n" +
+					"\n" +
+					"DELETE { ?word conll:"+col+" \"I\" . }\n" +
+					"INSERT { ?word conll:"+col+" ?newIob . }\n" +
+					"WHERE {\n" +
+					"    ?word conll:IOB \"I\" .\n" +
+					"    ?word nif:nextWord ?nextWord .\n" +
+					"    ?nextWord conll:"+col+" ?nextIob .\n" +
+					"    FILTER (?nextIob IN (\"B\", \"S\"))\n" +
+					"    BIND(\"E\" AS ?newIob)\n" +
+					"};";
+		}
+		return iob2IobesQuery;
+	}
 	/** arguments for Preprocessor */
 	public String[] preprocessorArgs() {
 		String result = "";
@@ -290,7 +337,10 @@ public class Transformer {
 								"\"^B-(.*)$\"" + "\t" + "\"( *\""	+"\t"+
 								"\"^E-(.*)$\"" + "\t" + "\"* )\""	+"\t"+
 								"\"^O$\"" 	   + "\t" + "\"*\""		+"\t";
-				} else
+				} else if (encoding.equals("iobEncoding")) {
+					System.err.println("Previously fixed.");
+				} else {
+				}
 					System.err.println("warning: unsupported input encoding \""+encoding+"\"");
 			}
 		}
@@ -336,6 +386,8 @@ public class Transformer {
 	
 	/** create a SPARQL script to transform source into target format; return null for no changes*/
 	public String[] updateArgs() {
+		// if handle iob -> iobes here we have to do that before hand
+
 		Hashtable<String,String> tgt2src = new Hashtable<String,String>(); 
 		//  we try to fill the target, so there must be one source property per target property
 		// but not necessarily vice versa
@@ -393,7 +445,24 @@ public class Transformer {
 					+ "INSERT { ?a conll:"+tgt+" ?b } "
 					+ "WHERE { ?a conll:"+src+" ?b};\n";
 			}
+
+		/** encoding features, use local names of properties as keys */
+		System.err.println(property2featureTgt);
 		if(updates.length()==0) return null;
+		// TODO: where should this go?
+		if (property2featureSrc.containsValue("iobEncoding")) {
+			List<String> iobCols = new ArrayList<>();
+			List<String> propertyCols = getCols(src);
+			for (String prop : property2featureSrc.keySet()) {
+				if (prop.matches("^[0-9]+$")) {
+					String encoding = property2featureSrc.get(prop);
+					if (encoding.equals("iobEncoding"))
+						iobCols.add(propertyCols.get(Integer.parseInt(prop)-1));
+				}
+			}
+			String iob2Iobes = createIob2IobesQuery(iobCols);
+			return new String[] {"-updates", "PREFIX conll: <"+BASEURI+">\n"+iob2Iobes+"\n"+updates};
+		}
 		return new String[] {"-updates", "PREFIX conll: <"+BASEURI+">\n"+updates };
 	}
 }
