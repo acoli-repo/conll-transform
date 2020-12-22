@@ -25,7 +25,7 @@ transform from SRC format to TGT format according to OWL
 
 `$ ./transform.sh CoNLL-99 CoNLL-03`
 
-> loading CoNLL-RDF ontology C:\Users\chiarcos\Desktop\conll-rdf\trunk\owl\conll.ttl
+> loading CoNLL-RDF ontology ./conll-rdf/owl/conll.ttl
 building bash script
 >
 > 1. configure preprocessing
