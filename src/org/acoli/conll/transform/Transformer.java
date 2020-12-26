@@ -6,6 +6,8 @@ import java.util.regex.Pattern;
 import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.*;
 
+import org.apache.commons.cli.*;
+
 // TODO: property mapping using rdfs:subPropertyOf
 // TODO: property mapping using SPARQL Update scripts
 // TODO: complain about mapping errors/imprecise mapping
@@ -19,8 +21,11 @@ public class Transformer {
 	private final List<String> tgtCols;
 	private final Map<String,Map<String,Integer>> sub2super2dist;
 	final String tgt;
-	final static String BASEURI = "http://ufal.mff.cuni.cz/conll2009-st/task-description.html#";
-	final static String DEFAULT_URI = "http://ignore.me/"; // used as default URI for converting data
+	final String conllPrefix;
+	final static String CONLL_PREFIX = "http://purl.org/acoli/conll#";
+	final static String CONLL_PREFIX_OLD = "http://ufal.mff.cuni.cz/conll2009-st/task-description.html#";
+	final static String DEFAULT_BASEURI = "http://ignore.me/"; // used as default URI for converting data
+	final static String DEFAULT_VERSION = "1";
 
 	/** encoding features, use local names of properties as keys */
 	final Map<String,String> property2featureSrc;
@@ -28,13 +33,14 @@ public class Transformer {
 	/** encoding features, use local names of properties as keys */
 	final Map<String,String> property2featureTgt;
 	
-	Transformer(String src, String tgt, String owl) {
+	Transformer(String src, String tgt, String owl, String conllPrefix) {
 		System.err.println("loading CoNLL-RDF ontology "+owl);
+		this.conllPrefix = conllPrefix;
 		model = ModelFactory.createDefaultModel() ;
 		model.read(owl);
 		
 		String query =
-				"PREFIX : <"+BASEURI+">\n"+
+				"PREFIX : <"+CONLL_PREFIX+">\n"+
 				"ASK { :"+src+" a :Dialect }";
 		if(QueryExecutionFactory.create(QueryFactory.create(query), model).execAsk())
 			this.src=src;
@@ -44,7 +50,7 @@ public class Transformer {
 		}
 		
 		query =
-				"PREFIX : <"+BASEURI+">\n"+
+				"PREFIX : <"+CONLL_PREFIX+">\n"+
 				"ASK { :"+tgt+" a :Dialect }";
 		if(QueryExecutionFactory.create(QueryFactory.create(query), model).execAsk())
 			this.tgt=tgt;
@@ -56,7 +62,7 @@ public class Transformer {
 		if(src==null || tgt ==null) {
 			System.err.println("supported formats: ");
 			query=
-					"PREFIX : <"+BASEURI+">\n"+
+					"PREFIX : <"+CONLL_PREFIX+">\n"+
 					"SELECT DISTINCT ?format "
 					+ "WHERE { "
 					+ "	?dialect a :Dialect ."
@@ -73,7 +79,7 @@ public class Transformer {
 		// populate sub2super2dist
 		sub2super2dist= new Hashtable<String,Map<String,Integer>>();
 		query=				
-				"PREFIX : <"+BASEURI+">\n"
+				"PREFIX : <"+CONLL_PREFIX+">\n"
 				+ "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n"
 				+ "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"
 				+ "SELECT ?subl ?superl (COUNT(DISTINCT ?step) AS ?dist) \n"
@@ -97,7 +103,7 @@ public class Transformer {
 		
 		// special symbols
 		property2featureSrc = new Hashtable<String,String>();
-		query = "PREFIX : <"+BASEURI+">\n"
+		query = "PREFIX : <"+CONLL_PREFIX+">\n"
 				+ "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n"
 				+ "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"
 				+ "SELECT DISTINCT ?propertyL ?symbol\n"
@@ -123,7 +129,7 @@ public class Transformer {
 		}
 
 		property2featureTgt = new Hashtable<String,String>();
-		query = "PREFIX : <"+BASEURI+">\n"
+		query = "PREFIX : <"+CONLL_PREFIX+">\n"
 				+ "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n"
 				+ "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"
 				+ "SELECT DISTINCT ?propertyL ?symbol\n"
@@ -158,13 +164,13 @@ public class Transformer {
 	}
 	
 	public String[] extractorArgs() {
-		return extractorArgs(DEFAULT_URI);
+		return extractorArgs(DEFAULT_BASEURI);
 	}
 	
 	/** dialect should be src or tgt labels (local names) */
 	protected List<String> getCols(String dialect) {
 		String query = 
-				"PREFIX conll: <"+BASEURI+">\n"
+				"PREFIX conll: <"+CONLL_PREFIX+">\n"
 				+ "SELECT DISTINCT ?label ?col\n"
 				+ "WHERE { "
 				+ "	?prop conll:hasMapping [ conll:dialect conll:"+dialect+"; conll:column ?col ] . "
@@ -205,24 +211,64 @@ public class Transformer {
 			result=result+" "+s;
 		return result.trim();
 	}
+
+	private static void printHelp(String baseuri) {
+		System.err.println("synopsis: Transformer [-silent] [-help] [-version VERSION] SRC TGT OWL [BASEURI]\n"+
+				"\t-silent  suppress this message\n"+
+				"\t-help    show this message and quit\n"+
+				"\t-version specify CoNLL-RDF version (1 or 2). Defaults to 1\n"+
+				"\tSRC      source format\n"+
+				"\tTGT      target format\n"+
+				"\tOWL      CoNLL-RDF ontology (or a replacement that defines one or more conll:Dialect objects\n"+
+				"\tBASEURI  base URI for the data being processed, defaults to "+baseuri+"\n"+
+				"generates CoNLL-RDF calls for reading and writing different dialects\n"+
+				"TODO: reads one-token-per-line TSV (\"CoNLL\") data from stdin, transforms to output format according to the conll:Dialect mapping defined in OWL\n"
+				+"NOTE that we generate Bash scripts at the moment, but that escaping (of SPARQL scripts) and paths (classpath, package) need to be adjusted in order to execute it\n"
+				+"CoNLL-RDF JSON configs soon to come.");
+	}
 	
 	public static void main(String[] args) {
-		String baseuri = Transformer.DEFAULT_URI;
-		if(args.length <1  ||  !args[0].equals("-silent"))
-			System.err.println("synopsis: Transformer [-silent] SRC TGT OWL [BASEURI]\n"+
-					"\t-silent suppress this message\n"+
-					"\tSRC     source format\n"+
-					"\tTGT     target format\n"+
-					"\tOWL     CoNLL-RDF ontology (or a replacement that defines one or more conll:Dialect objects\n"+
-					"\tBASEURI base URI for the data being processed, defaults to "+baseuri+"\n"+
-					"generates CoNLL-RDF calls for reading and writing different dialects\n"+
-					"TODO: reads one-token-per-line TSV (\"CoNLL\") data from stdin, transforms to output format according to the conll:Dialect mapping defined in OWL\n"
-					+"NOTE that we generate Bash scripts at the moment, but that escaping (of SPARQL scripts) and paths (classpath, package) need to be adjusted in order to execute it\n"
-					+"CoNLL-RDF JSON configs soon to come.");
-		
-		int i = 0;
-		if(args[0].equals("-silent")) i++;
-		Transformer me = new Transformer(args[i++], args[i++],args[i++]);
+		CommandLineParser parser = new DefaultParser();
+		Options options = new Options();
+
+		options.addOption("silent", false, "suppress this message");
+		options.addOption(Option.builder("version")
+										 .hasArg()
+										 .required(false)
+										 .desc("version of CoNLL-RDF={1,2}. Default: 1")
+										 .build());
+		options.addOption("help", false, "show this help message and quit");
+
+		String baseuri = Transformer.DEFAULT_BASEURI;
+		String version = Transformer.DEFAULT_VERSION;
+		String conllPrefix = Transformer.CONLL_PREFIX_OLD;
+
+		CommandLine cmd = null;
+		try {
+			cmd = parser.parse(options, args);
+		}
+		catch (ParseException ex) {
+			printHelp(baseuri);
+			System.exit(1);
+		}
+		String[] positionalArgs = cmd.getArgs();
+
+		if(cmd.hasOption("help") || positionalArgs.length <2  ||  !cmd.hasOption("silent")) {
+			printHelp(baseuri);
+			if (positionalArgs.length < 2)
+				System.exit(1);
+		}
+
+		if (cmd.hasOption("version"))
+			version = cmd.getOptionValue("version");
+
+		if (version.equals("2"))
+			conllPrefix = Transformer.CONLL_PREFIX;
+
+		if (positionalArgs.length > 3)
+			baseuri = positionalArgs[2];
+
+		Transformer me = new Transformer(positionalArgs[0], positionalArgs[1], positionalArgs[2], conllPrefix);
 
 		System.err.println("building bash script");
 		System.err.println("\n1. configure preprocessing");		
@@ -394,6 +440,6 @@ public class Transformer {
 					+ "WHERE { ?a conll:"+src+" ?b};\n";
 			}
 		if(updates.length()==0) return null;
-		return new String[] {"-updates", "PREFIX conll: <"+BASEURI+">\n"+updates };
+		return new String[] {"-updates", "PREFIX conll: <"+conllPrefix+">\n"+updates };
 	}
 }
