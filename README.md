@@ -17,7 +17,7 @@ open issues:
   -help list all supported formats
   SRC   source format
   TGT   target format
-  OWL   CoNLL ontology, TTL format, defaults to C:\Users\chiarcos\Desktop\conll-rdf\trunk\owl\conll.ttl
+  OWL   CoNLL ontology, TTL format, defaults to ./conll-rdf/owl/conll.ttl
 read CoNLL data from stdin, write to stdout
 transform from SRC format to TGT format according to OWL
 
@@ -25,7 +25,7 @@ transform from SRC format to TGT format according to OWL
 
 `$ ./transform.sh CoNLL-99 CoNLL-03`
 
-> loading CoNLL-RDF ontology C:\Users\chiarcos\Desktop\conll-rdf\trunk\owl\conll.ttl
+> loading CoNLL-RDF ontology ./conll-rdf/owl/conll.ttl
 building bash script
 >
 > 1. configure preprocessing
