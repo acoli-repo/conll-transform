@@ -17,10 +17,31 @@ CONLL_RDF=conll-rdf
 JAVA=java
 JAVAC=javac
 
-# system requirements:
-# git 
-# rapper (http://librdf.org/raptor/)
-# java
+##############################
+# check system requirenments #
+##############################
+
+function is_installed {
+	if ! whereis $1 >&/dev/null;	then
+		return 1
+	fi
+	if whereis $1 | egrep -m 1 '^'$1'[^\n]*/' >& /dev/null; then
+		return 0
+	fi
+	return 1
+}
+
+for req in git $JAVA $JAVAC ; do
+	if ! is_installed $req; then
+		echo error: did not find required shell '"'$req'"', please install it 1>&2
+		exit 1
+	fi
+done
+
+if ! is_installed rapper; then
+	echo error: did not find required shell '"'rapper'"', please install 'raptor2-utils (http://librdf.org/raptor)' 1>&2
+	exit 1
+fi
 
 ########
 # init #
@@ -41,7 +62,7 @@ if [ $OSTYPE = "cygwin" ]; then
 	OWL=`cygpath -wa $CONLL_RDF/owl`'\conll.ttl';
 fi;
 chmod u+x $RUN
-chmod u+x $CONLL_RDF/compile.sh; 
+chmod u+x $CONLL_RDF/compile.sh;
 
 ##################
 # basic help msg #
@@ -61,7 +82,7 @@ if echo $1 | egrep . >&/dev/null; then
 	###########
 	# do not touch
 	$CONLL_RDF/compile.sh;
-		
+
 	FORMATS=$(rapper -i turtle $OWL 2>/dev/null | \
 		grep '<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>.*#Dialect>' | \
 		sed "s/>.*//g" | sed "s/.*#//" | sort -u)
@@ -137,5 +158,5 @@ if echo $1 | egrep . >&/dev/null; then
 				$JAVA -Dfile.encoding=UTF8 -classpath $CLASSPATH $TRANSFORM -help -silent -version 1 $1 $2 $OWL
 				#could also add  -Dlog4j.configuration=file:'src/log4j.properties' for another log4j config
 			fi;
-	fi;	
+	fi;
 fi;
