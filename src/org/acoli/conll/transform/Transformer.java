@@ -447,7 +447,7 @@ public class Transformer {
 	public String[] updateArgs() {
 		// if handle iob -> iobes here we have to do that beforehand
 
-		Hashtable<String,String> tgt2src = new Hashtable<String,String>(); 
+		Hashtable<String,String> tgt2src = new Hashtable<String,String>();
 		//  we try to fill the target, so there must be one source property per target property
 		// but not necessarily vice versa
 		for(String tgt : tgtCols) {
@@ -521,9 +521,9 @@ public class Transformer {
 				}
 			}
 			String iob2Iobes = createIob2IobesQuery(iobCols);
-			return new String[] {"-custom", "-updates", "PREFIX conll: <"+BASEURI+">\n"+iob2Iobes+"\n"+updates};
+			return new String[] {"-custom", "-updates", "PREFIX conll: <"+conllPrefix+">\n"+iob2Iobes+"\n"+updates};
 		}
-		return new String[] {"-custom", "-updates", "PREFIX conll: <"+BASEURI+">\n"+updates };
+		return new String[] {"-custom", "-updates", "PREFIX conll: <"+conllPrefix+">\n"+updates };
 		// return new String[] {"-updates", "PREFIX conll: <"+conllPrefix+">\n"+updates };
 	}
 }
