@@ -6,6 +6,8 @@ import java.util.regex.Pattern;
 import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.*;
 
+import org.apache.commons.cli.*;
+
 // TODO: property mapping using rdfs:subPropertyOf
 // TODO: property mapping using SPARQL Update scripts
 // TODO: complain about mapping errors/imprecise mapping
@@ -19,22 +21,26 @@ public class Transformer {
 	private final List<String> tgtCols;
 	private final Map<String,Map<String,Integer>> sub2super2dist;
 	final String tgt;
-	final static String BASEURI = "http://ufal.mff.cuni.cz/conll2009-st/task-description.html#";
-	final static String DEFAULT_URI = "http://ignore.me/"; // used as default URI for converting data
+	final String conllPrefix;
+	final static String CONLL_PREFIX = "http://purl.org/acoli/conll#";
+	final static String CONLL_PREFIX_OLD = "http://ufal.mff.cuni.cz/conll2009-st/task-description.html#";
+	final static String DEFAULT_BASEURI = "#"; // used as default URI for converting data
+	final static String DEFAULT_VERSION = "1";
 
 	/** encoding features, use local names of properties as keys */
 	final Map<String,String> property2featureSrc;
 
 	/** encoding features, use local names of properties as keys */
 	final Map<String,String> property2featureTgt;
-	
-	Transformer(String src, String tgt, String owl) {
+
+	Transformer(String src, String tgt, String owl, String conllPrefix) {
 		System.err.println("loading CoNLL-RDF ontology "+owl);
+		this.conllPrefix = conllPrefix;
 		model = ModelFactory.createDefaultModel() ;
 		model.read(owl);
-		
+
 		String query =
-				"PREFIX : <"+BASEURI+">\n"+
+				"PREFIX : <"+CONLL_PREFIX+">\n"+
 				"ASK { :"+src+" a :Dialect }";
 		if(QueryExecutionFactory.create(QueryFactory.create(query), model).execAsk())
 			this.src=src;
@@ -42,9 +48,9 @@ public class Transformer {
 			this.src=null;
 			System.err.println("warning: did not find source format \""+src+"\".");
 		}
-		
+
 		query =
-				"PREFIX : <"+BASEURI+">\n"+
+				"PREFIX : <"+CONLL_PREFIX+">\n"+
 				"ASK { :"+tgt+" a :Dialect }";
 		if(QueryExecutionFactory.create(QueryFactory.create(query), model).execAsk())
 			this.tgt=tgt;
@@ -52,11 +58,11 @@ public class Transformer {
 			this.tgt=null;
 			System.err.println("warning: did not find target format \""+tgt+"\".");
 		}
-		
+
 		if(src==null || tgt ==null) {
 			System.err.println("supported formats: ");
 			query=
-					"PREFIX : <"+BASEURI+">\n"+
+					"PREFIX : <"+CONLL_PREFIX+">\n"+
 					"SELECT DISTINCT ?format "
 					+ "WHERE { "
 					+ "	?dialect a :Dialect ."
@@ -66,14 +72,14 @@ public class Transformer {
 			while(results.hasNext())
 				System.err.println("\t"+results.next().getLiteral("?format"));
 		}
-		
+
 		srcCols = getCols(src);
 		tgtCols = getCols(tgt);
-		
+
 		// populate sub2super2dist
 		sub2super2dist= new Hashtable<String,Map<String,Integer>>();
-		query=				
-				"PREFIX : <"+BASEURI+">\n"
+		query=
+				"PREFIX : <"+CONLL_PREFIX+">\n"
 				+ "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n"
 				+ "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"
 				+ "SELECT ?subl ?superl (COUNT(DISTINCT ?step) AS ?dist) \n"
@@ -94,10 +100,10 @@ public class Transformer {
 			if(sub2super2dist.get(sub).get(sup)==null)
 				sub2super2dist.get(sub).put(sup, dist);
 		}
-		
+
 		// special symbols
 		property2featureSrc = new Hashtable<String,String>();
-		query = "PREFIX : <"+BASEURI+">\n"
+		query = "PREFIX : <"+CONLL_PREFIX+">\n"
 				+ "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n"
 				+ "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"
 				+ "SELECT DISTINCT ?propertyL ?symbol\n"
@@ -111,7 +117,7 @@ public class Transformer {
 				+ "   BIND(replace(str(?encoding),'.*[#/]','') AS ?symbol)\n"
 				+ " } }";
 		results = QueryExecutionFactory.create(QueryFactory.create(query), model).execSelect();
-		
+
 		while(results.hasNext()) {
 			QuerySolution sol = results.next();
 			String property = ""+sol.getLiteral("?propertyL");
@@ -123,7 +129,7 @@ public class Transformer {
 		}
 
 		property2featureTgt = new Hashtable<String,String>();
-		query = "PREFIX : <"+BASEURI+">\n"
+		query = "PREFIX : <"+CONLL_PREFIX+">\n"
 				+ "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n"
 				+ "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"
 				+ "SELECT DISTINCT ?propertyL ?symbol\n"
@@ -147,27 +153,28 @@ public class Transformer {
 				property2featureTgt.put(property, symbol);
 		}
 	}
-	
+
 	/** create args for -conll parameter */
 	public String[] formatterArgs() {
 		String result = "-conll";
-		for(String prop : tgtCols) 
+		for(String prop : tgtCols)
 			result=result+"\t"+prop;
-		
+
 		return result.split("\t");
 	}
-	
+
 	public String[] extractorArgs() {
-		return extractorArgs(DEFAULT_URI);
+		return extractorArgs(DEFAULT_BASEURI);
 	}
-	
+
 	/** dialect should be src or tgt labels (local names) */
 	protected List<String> getCols(String dialect) {
-		String query = 
-				"PREFIX conll: <"+BASEURI+">\n"
+		String query =
+				"PREFIX conll: <"+CONLL_PREFIX+">\n"
+				+ "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n"
 				+ "SELECT DISTINCT ?label ?col\n"
 				+ "WHERE { "
-				+ "	?prop conll:hasMapping [ conll:dialect conll:"+dialect+"; conll:column ?col ] . "
+				+ "	?prop conll:hasMapping [ conll:dialect/(owl:sameAs|^owl:sameAs)? conll:"+dialect+"; conll:column ?col ] . "
 				+ " BIND(replace(str(?prop),'.*[#/]','') AS ?label)"
 				+ "} ORDER BY ?col ?label";
 		ResultSet results = QueryExecutionFactory.create(QueryFactory.create(query), model).execSelect();
@@ -189,7 +196,7 @@ public class Transformer {
 			}
 		return col2prop;
 	}
-	
+
 	public String[] extractorArgs(String baseuri) {
 		String result = baseuri;
 		for(String prop : srcCols) {
@@ -198,50 +205,89 @@ public class Transformer {
 
 		return result.split("\t");
 	}
-	
+
 	private static String writeArray(String[] array) {
 		String result = "";
 		for(String s : array)
 			result=result+" "+s;
 		return result.trim();
 	}
-	
+
+	private static void printHelp(String baseuri) {
+		System.err.println("synopsis: Transformer [-silent] [-help] [-version VERSION] SRC TGT OWL [BASEURI]\n"+
+				"\t-silent  suppress this message\n"+
+				"\t-help    show this message and quit\n"+
+				"\t-version specify CoNLL-RDF version (1 or 2). Defaults to 1\n"+
+				"\tSRC      source format\n"+
+				"\tTGT      target format\n"+
+				"\tOWL      CoNLL-RDF ontology (or a replacement that defines one or more conll:Dialect objects\n"+
+				"\tBASEURI  base URI for the data being processed, defaults to "+baseuri+"\n"+
+				"generates CoNLL-RDF calls for reading and writing different dialects\n"+
+				"TODO: reads one-token-per-line TSV (\"CoNLL\") data from stdin, transforms to output format according to the conll:Dialect mapping defined in OWL\n"
+				+"NOTE that we generate Bash scripts at the moment, but that escaping (of SPARQL scripts) and paths (classpath, package) need to be adjusted in order to execute it\n"
+				+"CoNLL-RDF JSON configs soon to come.");
+	}
+
 	public static void main(String[] args) {
-		String baseuri = Transformer.DEFAULT_URI;
-		if(args.length <1  ||  !args[0].equals("-silent"))
-			System.err.println("synopsis: Transformer [-silent] SRC TGT OWL [BASEURI]\n"+
-					"\t-silent suppress this message\n"+
-					"\tSRC     source format\n"+
-					"\tTGT     target format\n"+
-					"\tOWL     CoNLL-RDF ontology (or a replacement that defines one or more conll:Dialect objects\n"+
-					"\tBASEURI base URI for the data being processed, defaults to "+baseuri+"\n"+
-					"generates CoNLL-RDF calls for reading and writing different dialects\n"+
-					"TODO: reads one-token-per-line TSV (\"CoNLL\") data from stdin, transforms to output format according to the conll:Dialect mapping defined in OWL\n"
-					+"NOTE that we generate Bash scripts at the moment, but that escaping (of SPARQL scripts) and paths (classpath, package) need to be adjusted in order to execute it\n"
-					+"CoNLL-RDF JSON configs soon to come.");
-		
-		int i = 0;
-		if(args[0].equals("-silent")) i++;
-		Transformer me = new Transformer(args[i++], args[i++],args[i++]);
+		CommandLineParser parser = new DefaultParser();
+		Options options = new Options();
+
+		options.addOption("silent", false, "suppress this message");
+		options.addOption(Option.builder("version")
+										 .hasArg()
+										 .required(false)
+										 .desc("version of CoNLL-RDF={1,2}. Default: 1")
+										 .build());
+		options.addOption("help", false, "show this help message and quit");
+
+		String baseuri = Transformer.DEFAULT_BASEURI;
+		String version = Transformer.DEFAULT_VERSION;
+		String conllPrefix = Transformer.CONLL_PREFIX_OLD;
+
+		CommandLine cmd = null;
+		try {
+			cmd = parser.parse(options, args);
+		}
+		catch (ParseException ex) {
+			printHelp(baseuri);
+			System.exit(1);
+		}
+		String[] positionalArgs = cmd.getArgs();
+
+		if(cmd.hasOption("help") || positionalArgs.length <2  ||  !cmd.hasOption("silent")) {
+			printHelp(baseuri);
+			if (positionalArgs.length < 2)
+				System.exit(1);
+		}
+
+		if (cmd.hasOption("version"))
+			version = cmd.getOptionValue("version");
+
+		if (version.equals("2"))
+			conllPrefix = Transformer.CONLL_PREFIX;
+
+		if (positionalArgs.length > 3)
+			baseuri = positionalArgs[2];
+
+		Transformer me = new Transformer(positionalArgs[0], positionalArgs[1], positionalArgs[2], conllPrefix);
 
 		System.err.println("building bash script");
 
-
-		System.err.println("\n1. configure preprocessing");
+    System.err.println("\n1. configure preprocessing");
 		String[] preprocArgs = me.preprocessorArgs();
 
 		System.err.println("\n2. configure extraction");
 		String[] extractorArgs = me.extractorArgs(baseuri);
-		
+
 		System.err.println("\n3. configure update");
 		String[] updateArgs = me.updateArgs();
-		
+
 		System.err.println("\n4. configure formatter");
 		String[] formatterArgs = me.formatterArgs();
-		
+
 		System.err.println("\n5. configure postprocessing");
 		String[] postprocArgs = me.postprocessorArgs();
-		
+
 		System.err.println("\n6. writing script");
 		if(preprocArgs!=null) // optional
 			System.out.println("java -classpath bin org.acoli.conll.transform.Preprocessor "+writeArray(preprocArgs) +" | \\");
@@ -317,25 +363,25 @@ public class Transformer {
 	/** arguments for Preprocessor */
 	public String[] preprocessorArgs() {
 		String result = "";
-		
+
 		String block = property2featureSrc.get("blockSeparator");
 		String col = property2featureSrc.get("colSeparator");
 		String row = property2featureSrc.get("rowSeparator");
 		String comment = property2featureSrc.get("commentMarker");
 		String empty = property2featureSrc.get("emptyAnnotationMarker");
-		
-		if(block!=null && !block.equals(StringTransformer.BLOCK_SEPARATOR)) 
+
+		if(block!=null && !block.equals(StringTransformer.BLOCK_SEPARATOR))
 			result=result+"-block\t\""+block+"\"\t";
-		if(col!=null && !col.equals(StringTransformer.COL_SEPARATOR)) 
+		if(col!=null && !col.equals(StringTransformer.COL_SEPARATOR))
 			result=result+"-col\t\""+col+"\"\t";
-		if(row!=null && !row.equals(StringTransformer.ROW_SEPARATOR)) 
+		if(row!=null && !row.equals(StringTransformer.ROW_SEPARATOR))
 			result=result+"-row\t\""+row+"\"\t";
-		if(comment!=null && !comment.equals(StringTransformer.COMMENT_MARKER)) 
+		if(comment!=null && !comment.equals(StringTransformer.COMMENT_MARKER))
 			result=result+"-comment\t\""+comment+"\"\t";
-		if(empty!=null && !empty.equals(StringTransformer.EMPTY_ANNOTATION)) 
+		if(empty!=null && !empty.equals(StringTransformer.EMPTY_ANNOTATION))
 			result=result+"-empty\t\""+empty+"\"\t";
 
-		
+
 		for(String prop : property2featureSrc.keySet()) {
 			if(prop.matches("^[0-9]+$")) {
 				col = prop;
@@ -364,24 +410,24 @@ public class Transformer {
 
 	public String[] postprocessorArgs() {
 		String result = "";
-		
+
 		String block = property2featureTgt.get("blockSeparator");
 		String col = property2featureTgt.get("colSeparator");
 		String row = property2featureTgt.get("rowSeparator");
 		String comment = property2featureTgt.get("commentMarker");
 		String empty = property2featureTgt.get("emptyAnnotationMarker");
-		
-		if(block!=null && !block.equals(StringTransformer.BLOCK_SEPARATOR)) 
+
+		if(block!=null && !block.equals(StringTransformer.BLOCK_SEPARATOR))
 			result=result+"-block\t\""+block+"\"\t";
-		if(col!=null && !col.equals(StringTransformer.COL_SEPARATOR)) 
+		if(col!=null && !col.equals(StringTransformer.COL_SEPARATOR))
 			result=result+"-col\t\""+col+"\"\t";
-		if(row!=null && !row.equals(StringTransformer.ROW_SEPARATOR)) 
+		if(row!=null && !row.equals(StringTransformer.ROW_SEPARATOR))
 			result=result+"-row\t\""+row+"\"\t";
-		if(comment!=null && !comment.equals(StringTransformer.COMMENT_MARKER)) 
+		if(comment!=null && !comment.equals(StringTransformer.COMMENT_MARKER))
 			result=result+"-comment\t\""+comment+"\"\t";
-		if(empty!=null && !empty.equals(StringTransformer.EMPTY_ANNOTATION)) 
+		if(empty!=null && !empty.equals(StringTransformer.EMPTY_ANNOTATION))
 			result=result+"-empty\t\""+empty+"\"\t";
-		
+
 		for(String prop : property2featureTgt.keySet()) {
 			if(prop.matches("^[0-9]+$")) {
 				col = prop;
@@ -396,10 +442,10 @@ public class Transformer {
 		if(result.trim().length()==0) return null;
 		return result.trim().split("\t");
 	}
-	
+
 	/** create a SPARQL script to transform source into target format; return null for no changes*/
 	public String[] updateArgs() {
-		// if handle iob -> iobes here we have to do that before hand
+		// if handle iob -> iobes here we have to do that beforehand
 
 		Hashtable<String,String> tgt2src = new Hashtable<String,String>(); 
 		//  we try to fill the target, so there must be one source property per target property
@@ -417,7 +463,7 @@ public class Transformer {
 						else if(sub2super2dist.get(src).get(tgt)==dist)
 							System.err.println("warning: ambiguous mapping "+src+" or "+tgt2src.get(tgt)+" => "+tgt+", using "+tgt2src.get(tgt));
 					}
-				if(tgt2src.get(tgt)!=null) 
+				if(tgt2src.get(tgt)!=null)
 					System.err.println("generalization: "+tgt2src.get(tgt)+" => "+tgt);
 			}
 			if(tgt2src.get(tgt)==null) {
@@ -443,13 +489,13 @@ public class Transformer {
 				System.err.println("warning: no mapping for target format property "+tgt);
 		for(String src : srcCols) {
 			String tgt = null;
-			for(String t : tgt2src.keySet()) 
+			for(String t : tgt2src.keySet())
 				if(tgt2src.get(t).equals(src))
 					tgt=t;
 			if(tgt==null)
 				System.err.println("warning: no mapping for source format property "+src);
 		}
-			
+
 		String updates = "";
 		for(String tgt : tgt2src.keySet())
 			if(tgt2src.get(tgt)!=null && !tgt2src.get(tgt).equals(tgt)) {
@@ -462,7 +508,8 @@ public class Transformer {
 		/** encoding features, use local names of properties as keys */
 		System.err.println(property2featureTgt);
 		if(updates.length()==0) return null;
-		// TODO: where should this go?
+
+    // TODO: where should this go?
 		if (property2featureSrc.containsValue("iobEncoding")) {
 			List<String> iobCols = new ArrayList<>();
 			List<String> propertyCols = getCols(src);
@@ -477,5 +524,6 @@ public class Transformer {
 			return new String[] {"-custom", "-updates", "PREFIX conll: <"+BASEURI+">\n"+iob2Iobes+"\n"+updates};
 		}
 		return new String[] {"-custom", "-updates", "PREFIX conll: <"+BASEURI+">\n"+updates };
+		// return new String[] {"-updates", "PREFIX conll: <"+conllPrefix+">\n"+updates };
 	}
 }
