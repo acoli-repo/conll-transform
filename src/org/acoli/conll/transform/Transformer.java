@@ -24,7 +24,7 @@ public class Transformer {
 	final String conllPrefix;
 	final static String CONLL_PREFIX = "http://purl.org/acoli/conll#";
 	final static String CONLL_PREFIX_OLD = "http://ufal.mff.cuni.cz/conll2009-st/task-description.html#";
-	final static String DEFAULT_BASEURI = "http://ignore.me/"; // used as default URI for converting data
+	final static String DEFAULT_BASEURI = "#"; // used as default URI for converting data
 	final static String DEFAULT_VERSION = "1";
 
 	/** encoding features, use local names of properties as keys */
@@ -32,13 +32,13 @@ public class Transformer {
 
 	/** encoding features, use local names of properties as keys */
 	final Map<String,String> property2featureTgt;
-	
+
 	Transformer(String src, String tgt, String owl, String conllPrefix) {
 		System.err.println("loading CoNLL-RDF ontology "+owl);
 		this.conllPrefix = conllPrefix;
 		model = ModelFactory.createDefaultModel() ;
 		model.read(owl);
-		
+
 		String query =
 				"PREFIX : <"+CONLL_PREFIX+">\n"+
 				"ASK { :"+src+" a :Dialect }";
@@ -48,7 +48,7 @@ public class Transformer {
 			this.src=null;
 			System.err.println("warning: did not find source format \""+src+"\".");
 		}
-		
+
 		query =
 				"PREFIX : <"+CONLL_PREFIX+">\n"+
 				"ASK { :"+tgt+" a :Dialect }";
@@ -58,7 +58,7 @@ public class Transformer {
 			this.tgt=null;
 			System.err.println("warning: did not find target format \""+tgt+"\".");
 		}
-		
+
 		if(src==null || tgt ==null) {
 			System.err.println("supported formats: ");
 			query=
@@ -72,13 +72,13 @@ public class Transformer {
 			while(results.hasNext())
 				System.err.println("\t"+results.next().getLiteral("?format"));
 		}
-		
+
 		srcCols = getCols(src);
 		tgtCols = getCols(tgt);
-		
+
 		// populate sub2super2dist
 		sub2super2dist= new Hashtable<String,Map<String,Integer>>();
-		query=				
+		query=
 				"PREFIX : <"+CONLL_PREFIX+">\n"
 				+ "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n"
 				+ "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"
@@ -100,7 +100,7 @@ public class Transformer {
 			if(sub2super2dist.get(sub).get(sup)==null)
 				sub2super2dist.get(sub).put(sup, dist);
 		}
-		
+
 		// special symbols
 		property2featureSrc = new Hashtable<String,String>();
 		query = "PREFIX : <"+CONLL_PREFIX+">\n"
@@ -117,7 +117,7 @@ public class Transformer {
 				+ "   BIND(replace(str(?encoding),'.*[#/]','') AS ?symbol)\n"
 				+ " } }";
 		results = QueryExecutionFactory.create(QueryFactory.create(query), model).execSelect();
-		
+
 		while(results.hasNext()) {
 			QuerySolution sol = results.next();
 			String property = ""+sol.getLiteral("?propertyL");
@@ -153,27 +153,28 @@ public class Transformer {
 				property2featureTgt.put(property, symbol);
 		}
 	}
-	
+
 	/** create args for -conll parameter */
 	public String[] formatterArgs() {
 		String result = "-conll";
-		for(String prop : tgtCols) 
+		for(String prop : tgtCols)
 			result=result+"\t"+prop;
-		
+
 		return result.split("\t");
 	}
-	
+
 	public String[] extractorArgs() {
 		return extractorArgs(DEFAULT_BASEURI);
 	}
-	
+
 	/** dialect should be src or tgt labels (local names) */
 	protected List<String> getCols(String dialect) {
-		String query = 
+		String query =
 				"PREFIX conll: <"+CONLL_PREFIX+">\n"
+				+ "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n"
 				+ "SELECT DISTINCT ?label ?col\n"
 				+ "WHERE { "
-				+ "	?prop conll:hasMapping [ conll:dialect conll:"+dialect+"; conll:column ?col ] . "
+				+ "	?prop conll:hasMapping [ conll:dialect/(owl:sameAs|^owl:sameAs)? conll:"+dialect+"; conll:column ?col ] . "
 				+ " BIND(replace(str(?prop),'.*[#/]','') AS ?label)"
 				+ "} ORDER BY ?col ?label";
 		ResultSet results = QueryExecutionFactory.create(QueryFactory.create(query), model).execSelect();
@@ -195,7 +196,7 @@ public class Transformer {
 			}
 		return col2prop;
 	}
-	
+
 	public String[] extractorArgs(String baseuri) {
 		String result = baseuri;
 		for(String prop : srcCols) {
@@ -204,7 +205,7 @@ public class Transformer {
 
 		return result.split("\t");
 	}
-	
+
 	private static String writeArray(String[] array) {
 		String result = "";
 		for(String s : array)
@@ -226,7 +227,7 @@ public class Transformer {
 				+"NOTE that we generate Bash scripts at the moment, but that escaping (of SPARQL scripts) and paths (classpath, package) need to be adjusted in order to execute it\n"
 				+"CoNLL-RDF JSON configs soon to come.");
 	}
-	
+
 	public static void main(String[] args) {
 		CommandLineParser parser = new DefaultParser();
 		Options options = new Options();
@@ -271,21 +272,21 @@ public class Transformer {
 		Transformer me = new Transformer(positionalArgs[0], positionalArgs[1], positionalArgs[2], conllPrefix);
 
 		System.err.println("building bash script");
-		System.err.println("\n1. configure preprocessing");		
+		System.err.println("\n1. configure preprocessing");
 		String[] preprocArgs = me.preprocessorArgs();
-		
+
 		System.err.println("\n2. configure extraction");
 		String[] extractorArgs = me.extractorArgs(baseuri);
-		
+
 		System.err.println("\n3. configure update");
 		String[] updateArgs = me.updateArgs();
-		
+
 		System.err.println("\n4. configure formatter");
 		String[] formatterArgs = me.formatterArgs();
-		
+
 		System.err.println("\n5. configure postprocessing");
 		String[] postprocArgs = me.postprocessorArgs();
-		
+
 		System.err.println("\n6. writing script");
 		if(preprocArgs!=null) // optional
 			System.out.println("java -classpath bin org.acoli.conll.transform.Preprocessor "+writeArray(preprocArgs) +" | \\");
@@ -303,25 +304,25 @@ public class Transformer {
 	/** arguments for Preprocessor */
 	public String[] preprocessorArgs() {
 		String result = "";
-		
+
 		String block = property2featureSrc.get("blockSeparator");
 		String col = property2featureSrc.get("colSeparator");
 		String row = property2featureSrc.get("rowSeparator");
 		String comment = property2featureSrc.get("commentMarker");
 		String empty = property2featureSrc.get("emptyAnnotationMarker");
-		
-		if(block!=null && !block.equals(StringTransformer.BLOCK_SEPARATOR)) 
+
+		if(block!=null && !block.equals(StringTransformer.BLOCK_SEPARATOR))
 			result=result+"-block\t\""+block+"\"\t";
-		if(col!=null && !col.equals(StringTransformer.COL_SEPARATOR)) 
+		if(col!=null && !col.equals(StringTransformer.COL_SEPARATOR))
 			result=result+"-col\t\""+col+"\"\t";
-		if(row!=null && !row.equals(StringTransformer.ROW_SEPARATOR)) 
+		if(row!=null && !row.equals(StringTransformer.ROW_SEPARATOR))
 			result=result+"-row\t\""+row+"\"\t";
-		if(comment!=null && !comment.equals(StringTransformer.COMMENT_MARKER)) 
+		if(comment!=null && !comment.equals(StringTransformer.COMMENT_MARKER))
 			result=result+"-comment\t\""+comment+"\"\t";
-		if(empty!=null && !empty.equals(StringTransformer.EMPTY_ANNOTATION)) 
+		if(empty!=null && !empty.equals(StringTransformer.EMPTY_ANNOTATION))
 			result=result+"-empty\t\""+empty+"\"\t";
 
-		
+
 		for(String prop : property2featureSrc.keySet()) {
 			if(prop.matches("^[0-9]+$")) {
 				col = prop;
@@ -347,24 +348,24 @@ public class Transformer {
 
 	public String[] postprocessorArgs() {
 		String result = "";
-		
+
 		String block = property2featureTgt.get("blockSeparator");
 		String col = property2featureTgt.get("colSeparator");
 		String row = property2featureTgt.get("rowSeparator");
 		String comment = property2featureTgt.get("commentMarker");
 		String empty = property2featureTgt.get("emptyAnnotationMarker");
-		
-		if(block!=null && !block.equals(StringTransformer.BLOCK_SEPARATOR)) 
+
+		if(block!=null && !block.equals(StringTransformer.BLOCK_SEPARATOR))
 			result=result+"-block\t\""+block+"\"\t";
-		if(col!=null && !col.equals(StringTransformer.COL_SEPARATOR)) 
+		if(col!=null && !col.equals(StringTransformer.COL_SEPARATOR))
 			result=result+"-col\t\""+col+"\"\t";
-		if(row!=null && !row.equals(StringTransformer.ROW_SEPARATOR)) 
+		if(row!=null && !row.equals(StringTransformer.ROW_SEPARATOR))
 			result=result+"-row\t\""+row+"\"\t";
-		if(comment!=null && !comment.equals(StringTransformer.COMMENT_MARKER)) 
+		if(comment!=null && !comment.equals(StringTransformer.COMMENT_MARKER))
 			result=result+"-comment\t\""+comment+"\"\t";
-		if(empty!=null && !empty.equals(StringTransformer.EMPTY_ANNOTATION)) 
+		if(empty!=null && !empty.equals(StringTransformer.EMPTY_ANNOTATION))
 			result=result+"-empty\t\""+empty+"\"\t";
-		
+
 		for(String prop : property2featureTgt.keySet()) {
 			if(prop.matches("^[0-9]+$")) {
 				col = prop;
@@ -379,10 +380,10 @@ public class Transformer {
 		if(result.trim().length()==0) return null;
 		return result.trim().split("\t");
 	}
-	
+
 	/** create a SPARQL script to transform source into target format; return null for no changes*/
 	public String[] updateArgs() {
-		Hashtable<String,String> tgt2src = new Hashtable<String,String>(); 
+		Hashtable<String,String> tgt2src = new Hashtable<String,String>();
 		//  we try to fill the target, so there must be one source property per target property
 		// but not necessarily vice versa
 		for(String tgt : tgtCols) {
@@ -398,7 +399,7 @@ public class Transformer {
 						else if(sub2super2dist.get(src).get(tgt)==dist)
 							System.err.println("warning: ambiguous mapping "+src+" or "+tgt2src.get(tgt)+" => "+tgt+", using "+tgt2src.get(tgt));
 					}
-				if(tgt2src.get(tgt)!=null) 
+				if(tgt2src.get(tgt)!=null)
 					System.err.println("generalization: "+tgt2src.get(tgt)+" => "+tgt);
 			}
 			if(tgt2src.get(tgt)==null) {
@@ -424,13 +425,13 @@ public class Transformer {
 				System.err.println("warning: no mapping for target format property "+tgt);
 		for(String src : srcCols) {
 			String tgt = null;
-			for(String t : tgt2src.keySet()) 
+			for(String t : tgt2src.keySet())
 				if(tgt2src.get(t).equals(src))
 					tgt=t;
 			if(tgt==null)
 				System.err.println("warning: no mapping for source format property "+src);
 		}
-			
+
 		String updates = "";
 		for(String tgt : tgt2src.keySet())
 			if(tgt2src.get(tgt)!=null && !tgt2src.get(tgt).equals(tgt)) {
