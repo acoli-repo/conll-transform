@@ -109,7 +109,7 @@ if echo $1 | egrep . >&/dev/null; then
 	# updates CoNLL-transform files if necessary
 	JAVAS=$(
 		cd $HOME;
-		for java in `find  . | egrep '\.java$'`; do
+		for java in `find  src | egrep '\.java$'`; do
 			class=`echo $java | sed -e s/'src\/'/'bin\/'/ -e s/'java$'/'class'/;`
 			if [ ! -e $class ]; then
 				echo $java;
@@ -119,6 +119,8 @@ if echo $1 | egrep . >&/dev/null; then
 			fi;
 		done;
 		)
+
+	echo $JAVAS 1>&2
 
 	cd $HOME
 		if echo $JAVAS | grep java >/dev/null; then

@@ -198,7 +198,7 @@ public class Transformer {
 	}
 
 	public String[] extractorArgs(String baseuri) {
-		String result = baseuri;
+		String result = "\""+baseuri+"\"";
 		for(String prop : srcCols) {
 			result=result+"\t"+prop;
 		}
@@ -289,16 +289,30 @@ public class Transformer {
 		String[] postprocArgs = me.postprocessorArgs();
 
 		System.err.println("\n6. writing script");
+
+		// obligatory
+		System.out.println("#!/bin/bash");
+		System.out.println();
+
+		System.out.println("TRANSFORM=$(dirname $0)");
+		System.out.println("echo \"warning: set TRANSFORM the CoNLL-Transform root directory\" 1>&2");
+		System.out.println();
+
+		System.out.println("CONLL_RDF=$TRANSFORM/conll-rdf");
+		System.out.println("echo \"warning: set CONLL_RDF to your local CoNLL-RDF installation!\" 1>&2");
+		System.out.println("echo \"or get it from https://github.com/acoli-repo/conll-rdf\" 1>&2");
+		System.out.println();
+
 		if(preprocArgs!=null) // optional
-			System.out.println("java -classpath bin org.acoli.conll.transform.Preprocessor "+writeArray(preprocArgs) +" | \\");
+			System.out.println("java -classpath $TRANSFORM/bin org.acoli.conll.transform.Preprocessor "+writeArray(preprocArgs) +" | \\");
 		// obligatory
-		System.out.println("./run.sh CoNLLStreamExtractor "+writeArray(extractorArgs)+ " | \\");
+		System.out.println("$CONLL_RDF/run.sh CoNLLStreamExtractor "+writeArray(extractorArgs)+ " | \\");
 		if(updateArgs!=null) // optional
-			System.out.println("./run.sh CoNLLRDFUpdater "+writeArray(updateArgs) + " | \\");
+			System.out.println("$CONLL_RDF/run.sh CoNLLRDFUpdater "+writeArray(updateArgs).replaceAll("\\s+"," ").trim() + " | \\");
 		// obligatory
-		System.out.print("./run.sh CoNLLRDFFormatter "+writeArray(formatterArgs));
+		System.out.print("$CONLL_RDF/run.sh CoNLLRDFFormatter "+writeArray(formatterArgs));
 		if(postprocArgs!=null) // optional
-			System.out.print(" | \\\njava -classpath bin org.acoli.conll.transform.Postprocessor "+writeArray(postprocArgs));
+			System.out.print(" | \\\njava -classpath $TRANSFORM/bin org.acoli.conll.transform.Postprocessor "+writeArray(postprocArgs));
 		System.out.println();
 	}
 
@@ -521,9 +535,9 @@ public class Transformer {
 				}
 			}
 			String iob2Iobes = createIob2IobesQuery(iobCols);
-			return new String[] {"-custom", "-updates", "PREFIX conll: <"+conllPrefix+">\n"+iob2Iobes+"\n"+updates};
+			return new String[] {"-custom", "-updates", "\"PREFIX conll: <"+conllPrefix+">\n"+iob2Iobes+"\n"+updates+"\""};
 		}
-		return new String[] {"-custom", "-updates", "PREFIX conll: <"+conllPrefix+">\n"+updates };
+		return new String[] {"-custom", "-updates", "\"PREFIX conll: <"+conllPrefix+">\n"+updates+"\"" };
 		// return new String[] {"-updates", "PREFIX conll: <"+conllPrefix+">\n"+updates };
 	}
 }
